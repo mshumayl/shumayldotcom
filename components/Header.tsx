@@ -1,0 +1,19 @@
+import Link from 'next/link';
+import { ReactNode } from 'react';
+import Navbar from './Navbar';
+
+const Header: React.FC = () => {
+    
+    return (
+        <>
+            <div className="flex flex-row items-center">
+                <div className="flex font-grotesk font-bold text-2xl basis-1/6">Shumayl.com</div>
+                <div className="flex shrink basis-5/6">
+                    <Navbar/>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default Header;
