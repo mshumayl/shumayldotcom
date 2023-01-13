@@ -4,7 +4,7 @@ const Navbar: React.FC = () => {
     
     return (
         <>
-            <div className="container flex flex-row">
+            <div className="flex flex-row bg-orange-300">
                 <ul className="flex space-x-6 list-none">
                     <li>Blog</li>
                     <li>About</li>

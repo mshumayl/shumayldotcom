@@ -17,14 +17,23 @@ interface Posts {
 
 export async function getStaticProps(): Promise<{ props: { posts: Posts[] } }> {
   const files = await fs.readdir('posts')
-  const posts = await Promise.all(files.map((fileName: string) => {
-      const slug = fileName.replace('.md', '');
-      const readMd = fs.readFile(`posts/${fileName}`, 'utf-8');
-      const { data: frontmatter } = matter(readMd.toString());
 
-      return { slug, frontmatter };
-  }));
+  console.log(files);
 
+  const getFiles = files.map((fileName: string) => {
+    return fs.readFile(`posts/${fileName}`, 'utf-8');
+  });
+
+  const parseFiles = await Promise.all(getFiles);
+  
+  const posts = parseFiles.map((unparsedFile: string, index: number) => {
+    const slug = files[index].replace('.md', '');
+    const { data: frontmatter } = matter(unparsedFile);
+  
+    return { slug, frontmatter };
+  });
+
+  console.log(posts)
   return {props: {posts}}
 };
 
@@ -38,7 +47,7 @@ export default function Home({ posts }: { posts: Posts[] }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
+      <div className="bg-green-300">
         <Header/>
         <LatestPosts posts={posts}/>
       </div>      

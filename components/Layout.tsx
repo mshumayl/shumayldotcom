@@ -9,7 +9,7 @@ const Layout: React.FC<Props> = ({children}) => {
     
     return (
         <>
-            <div className="container flex flex-col m-12">
+            <div className="p-4 md:p-10 w-full bg-blue-500">
                 <main>
                     {children}
                 </main>

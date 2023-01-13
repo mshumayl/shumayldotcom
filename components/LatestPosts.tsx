@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Card from '../components/Card';
+
 
 interface Posts {
     slug: string;
@@ -10,10 +12,10 @@ const LatestPosts: React.FC<{posts: Posts[]}> = ({ posts }) => {
     
     return (
         <>
-            <div className="">
+            <div className="my-20 bg-yellow-500">
                 {!posts && 'No posts found.'}
                 {posts.map(({ slug, frontmatter }) => (
-                    <div key={slug}>{slug}</div>
+                    <Card slug={slug} frontmatter={frontmatter}/>
                 ))}
             </div>
         </>

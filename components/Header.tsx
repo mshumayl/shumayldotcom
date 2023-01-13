@@ -8,7 +8,7 @@ const Header: React.FC = () => {
         <>
             <div className="flex flex-row items-center">
                 <div className="flex font-grotesk font-bold text-2xl basis-1/6">Shumayl.com</div>
-                <div className="flex shrink basis-5/6">
+                <div className="flex basis-5/6 shrink justify-end">
                     <Navbar/>
                 </div>
             </div>
