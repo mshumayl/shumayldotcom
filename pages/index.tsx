@@ -10,15 +10,15 @@ import matter from 'gray-matter';
 
 const inter = Inter({ subsets: ['latin'] })
 
+
 interface Posts {
   slug: string;
   frontmatter: { [key: string]: any }
 }
 
-export async function getStaticProps(): Promise<{ props: { posts: Posts[] } }> {
-  const files = await fs.readdir('posts')
 
-  console.log(files);
+async function getPosts() {
+  const files = await fs.readdir('posts')
 
   const getFiles = files.map((fileName: string) => {
     return fs.readFile(`posts/${fileName}`, 'utf-8');
@@ -33,8 +33,14 @@ export async function getStaticProps(): Promise<{ props: { posts: Posts[] } }> {
     return { slug, frontmatter };
   });
 
-  console.log(posts)
-  return {props: {posts}}
+  return posts;
+}
+
+
+export async function getStaticProps(): Promise<{ props: { posts: Posts[] } }> {
+  const posts = await getPosts();  
+
+  return {props: {posts}};
 };
 
 
