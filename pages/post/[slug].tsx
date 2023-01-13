@@ -1,5 +1,7 @@
 import { promises as fs } from 'fs';
 import matter from 'gray-matter';
+import md from 'markdown-it';
+import Header from '../../components/Header'
 
 export async function getStaticPaths() {
     const files = await fs.readdir('posts');
@@ -15,8 +17,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }: { params: { slug: string } }) {
-    const fileName = await fs.readFile(`posts/${slug}`);
-    const { data: frontmatter, content } = matter(fileName);
+    const file = await fs.readFile(`posts/${slug}.md`);
+    const { data: frontmatter, content } = matter(file);
 
     console.log(content);
 
@@ -30,10 +32,14 @@ export async function getStaticProps({ params: { slug } }: { params: { slug: str
 
 
 export default function PostPage({ frontmatter, content }: { frontmatter: any, content: any }) {
+    const { title, tag } = frontmatter;
+    
     return (
         <>
-            <div>
-                
+            <Header/>
+            <div className='prose my-10 mx-auto'>
+                <h1 className="font-grotesk font-extrabold">{title}</h1>
+                <div className="font=grotesk" dangerouslySetInnerHTML={{ __html: md().render(content) }}/>
             </div>
         </>
     );
