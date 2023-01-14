@@ -4,9 +4,9 @@ const ReturnHomeButton: React.FC = () => {
     
     return (
         <>
-            <div className="flex flex-row bg-teal-500">
+            <div className="flex flex-row ">
                 <div>
-                    <Link href="/">Back</Link>    
+                    <Link className="text-gray-50" href="/">Back</Link>    
                 </div>
             </div>
         </>

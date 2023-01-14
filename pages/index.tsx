@@ -53,7 +53,7 @@ export default function Home({ posts }: { posts: Posts[] }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-green-300">
+      <div>
         <Header/>
         <LatestPosts posts={posts}/>
       </div>      

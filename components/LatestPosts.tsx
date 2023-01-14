@@ -10,10 +10,12 @@ interface Posts {
 
 const LatestPosts: React.FC<{posts: Posts[]}> = ({ posts }) => {
     
+    const latestPostSectionTitle = "<Latest Posts/>";
+
     return (
         <>
-            <div className="my-20 bg-yellow-500">
-                <div className="font-grotesk text-2xl mx-2">Latest Posts</div>
+            <div className="my-20">
+                <div className="font-grotesk font-extralight text-3xl mx-3 tracking-widest">{latestPostSectionTitle}</div>
                 {!posts && 'No posts found.'}
                 {posts.map(({ slug, frontmatter }) => (
                     <Card slug={slug} frontmatter={frontmatter}/>

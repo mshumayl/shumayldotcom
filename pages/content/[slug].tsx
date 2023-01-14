@@ -31,20 +31,20 @@ export async function getStaticProps({ params: { slug } }: { params: { slug: str
      };
 }
 
-
+//TODO: Abstract into a reusable function that can be used in both `content/` and `post/`
 export default function PostPage({ frontmatter, content }: { frontmatter: any, content: any }) {
     const { title } = frontmatter;
     
     return (
-        <>
+        <div>
             <Header/>
-            <div className='prose my-10 mx-auto'>
-                <h1 className="font-grotesk font-extrabold">{title}</h1>
-                <div className="font=grotesk" dangerouslySetInnerHTML={{ __html: md().render(content) }}/>
+            <div className="prose my-10 mx-auto">
+                <h1 className="font-grotesk font-extralight text-gray-50">{title}</h1>
+                <div className="font-grotesk text-gray-400 [&>p>a]:text-gray-300 [&>ul>li>a]:text-gray-300" dangerouslySetInnerHTML={{ __html: md().render(content) }}/>
                 <div>
                     <ReturnHomeButton/>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
