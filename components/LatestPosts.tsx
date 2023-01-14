@@ -13,6 +13,7 @@ const LatestPosts: React.FC<{posts: Posts[]}> = ({ posts }) => {
     return (
         <>
             <div className="my-20 bg-yellow-500">
+                <div className="font-grotesk text-2xl mx-2">Latest Posts</div>
                 {!posts && 'No posts found.'}
                 {posts.map(({ slug, frontmatter }) => (
                     <Card slug={slug} frontmatter={frontmatter}/>

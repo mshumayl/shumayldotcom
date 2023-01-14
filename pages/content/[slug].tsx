@@ -5,7 +5,7 @@ import Header from '../../components/Header'
 import ReturnHomeButton from '../../components/ReturnHomeButton';
 
 export async function getStaticPaths() {
-    const files = await fs.readdir('posts');
+    const files = await fs.readdir('content');
 
     const paths = files.map((fileName: string) => {
         return {
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }: { params: { slug: string } }) {
-    const file = await fs.readFile(`posts/${slug}.md`);
+    const file = await fs.readFile(`content/${slug}.md`);
     const { data: frontmatter, content } = matter(file);
 
     console.log(content);
@@ -33,7 +33,7 @@ export async function getStaticProps({ params: { slug } }: { params: { slug: str
 
 
 export default function PostPage({ frontmatter, content }: { frontmatter: any, content: any }) {
-    const { title, tag } = frontmatter;
+    const { title } = frontmatter;
     
     return (
         <>
