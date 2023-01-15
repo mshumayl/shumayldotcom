@@ -33,14 +33,15 @@ export async function getStaticProps({ params: { slug } }: { params: { slug: str
 
 
 export default function PostPage({ frontmatter, content }: { frontmatter: any, content: any }) {
-    const { title, tag } = frontmatter;
+    const { title, date } = frontmatter;
     
     return (
         <>
             <Header/>
             <div className='prose my-10 mx-auto'>
                 <h1 className="font-grotesk font-extralight text-gray-50">{title}</h1>
-                <div className="font-grotesk text-gray-400 [&>p>a]:text-gray-300 leading-loose [&>ul>li>a]:text-gray-300" dangerouslySetInnerHTML={{ __html: md().render(content) }}/>
+                <div className="font-grotesk text-sm tracking-wider text-gray-50">{date}</div>
+                <div className="font-grotesk text-gray-300 [&>p>a]:text-gray-100 leading-loose [&>ul>li>a]:text-gray-100 [&>h2]:text-gray-100 [&>p>code]:text-gray-100  [&>p>code]:bg-gray-700" dangerouslySetInnerHTML={{ __html: md().render(content) }}/>
                 <div>
                     <ReturnHomeButton/>
                 </div>
