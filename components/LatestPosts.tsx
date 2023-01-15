@@ -18,7 +18,7 @@ const LatestPosts: React.FC<{posts: Posts[]}> = ({ posts }) => {
                 <div className="font-grotesk font-extralight text-3xl mx-3 tracking-widest">{latestPostSectionTitle}</div>
                 {!posts && 'No posts found.'}
                 {posts.map(({ slug, frontmatter }) => (
-                    <Card slug={slug} frontmatter={frontmatter}/>
+                    <Card key={slug} slug={slug} frontmatter={frontmatter}/>
                 ))}
             </div>
         </>
