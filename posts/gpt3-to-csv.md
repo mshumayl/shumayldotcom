@@ -20,7 +20,13 @@ The user would input the title of the data that they need and the columns that t
 ## Front-end
 To keep things simple, I decided to have a simple React app that directly connects to the API, as I did not want to concern myself the API limits and costs. So, anyone who would like to try this our will have to specify their keys in their .env file.
 
+![Input form.](/images/gpt-to-csv-input.jpg)
+*Input form.*
+
 The UI handles user input for the title of the data and also the columns required for the data. After the model returns a response, the UI will then display a button for the user to download the generated .CSV file.
+
+![Download .CSV file.](/images/gpt-to-csv-download.jpg)
+*Download .CSV file.*
 
 ## Prompt engineering
 With prompt engineering being a very new concept with the advent of Large Language Models (LLMs), I do not have much experience or subtlety in the art of crafting a prompt. This is what the prompt looks like:
