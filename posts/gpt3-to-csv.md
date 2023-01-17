@@ -1,7 +1,7 @@
 ---
-title: 'Using GPT-3 AI to Generate Data On-Demand'
+title: 'Using AI to Generate Data On-Demand'
 image: '/images/deepmind-Snqm29dhfOk-unsplash.jpg'
-excerpt: 'Harnessing the power of Large Language Models'
+excerpt: 'Harnessing the power of Large Language Models.'
 date: '16-01-2022'
 tags: 
     - 'machine-learning'
