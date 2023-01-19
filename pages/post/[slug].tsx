@@ -39,7 +39,7 @@ export default function PostPage({ frontmatter, content }: { frontmatter: any, c
         <>
             <head>
                 <title>{title}</title>
-                <meta property="og:image" content={`https://localhost:300/api/og?title=${title}`}></meta>
+                <meta property="og:image" content={`https://www.shumayl.com/api/og?title=${title}`}></meta>
             </head>
             <Header/>
             <div className='prose my-10 mx-auto'>
