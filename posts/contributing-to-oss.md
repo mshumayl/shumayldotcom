@@ -6,7 +6,7 @@ date: '17-01-2022'
 tags: 
     - 'oss'
 ---
-Contributing to an open-source software may seem intimidating, with all the different standards and requirements between different codebases. However, there are a few core components to a great PR. Here are a few tips you should keep in mind when contributing to open-source software development. 
+Contributing to open-source software projects can be intimidating, with all the different standards and requirements between different codebases. However, there are a few core components to a great Pull Request. These general guidelines will help you craft a PR that's clear, well-written, and well-organized, increasing the chance that your code will be approved for implementation.
 
 ## Communicating your intention
 Open-source software development is a collaborative process. As such, good communication is imperative to a good contribution. 
@@ -30,7 +30,7 @@ Optimally, you should also ensure that the test coverage for the project do not 
 ## Updating the documentation
 Writing documentation for your new implementation is as important as writing the implementation itself. Without proper documentation, it would be hard for end-users to understand your contribution and the improvement you have made for them, the end-users. It also gives context on the changes you have made and the motivation behind the implementation. 
 
-Without proper documentation, the software will be inaccessible for the end-users.
+Without proper documentation, the software you just wrote will be inaccessible for the end-users.
 
 ## Submitting a Pull Request
 When drafting a PR, you should ensure that you describe your changes in detail and link it to the related Issue(s). This allows maintainers easily understand the context for the change.

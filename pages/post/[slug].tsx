@@ -37,6 +37,10 @@ export default function PostPage({ frontmatter, content }: { frontmatter: any, c
     
     return (
         <>
+            <head>
+                <title>{title}</title>
+                <meta property="og:image" content={`https://localhost:300/api/og?title=${title}`}></meta>
+            </head>
             <Header/>
             <div className='prose my-10 mx-auto'>
                 <h1 className="font-grotesk font-extralight text-gray-50">{title}</h1>
