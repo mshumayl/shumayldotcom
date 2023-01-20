@@ -27,19 +27,34 @@ export async function getStaticProps({ params: { slug } }: { params: { slug: str
         props: {
             frontmatter,
             content,
+            slug
         }
      };
 }
 
 
-export default function PostPage({ frontmatter, content }: { frontmatter: any, content: any }) {
-    const { title, date } = frontmatter;
+export default function PostPage({ frontmatter, content, slug }: { frontmatter: any, content: any, slug: string }) {
+    const { title, date, excerpt } = frontmatter;
     
     return (
         <>
             <head>
                 <title>{title}</title>
                 <meta property="og:image" content={`https://www.shumayl.com/api/og?title=${title}`}></meta>
+                <meta name="description" content={`${excerpt}`}></meta>
+
+                <meta property="og:url" content={`https://www.shumayl.com/pages/${slug}`}></meta>
+                <meta property="og:type" content="website"></meta>
+                <meta property="og:title" content={`${title}`}></meta>
+                <meta property="og:description" content={`${excerpt}`}></meta>
+                <meta property="og:image" content={`https://www.shumayl.com/api/og?title=${title}`}></meta>
+
+                <meta name="twitter:card" content="summary_large_image"></meta>
+                <meta property="twitter:domain" content="shumayl.com"></meta>
+                <meta property="twitter:url" content={`https://www.shumayl.com/pages/${slug}`}></meta>
+                <meta name="twitter:title" content={`${title}`}></meta>
+                <meta name="twitter:description" content={`${excerpt}`}></meta>
+                <meta name="twitter:image" content={`https://www.shumayl.com/api/og?title=${title}`}></meta>
             </head>
             <Header/>
             <div className='prose my-10 mx-auto'>
