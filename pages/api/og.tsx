@@ -5,67 +5,78 @@ export const config = {
   runtime: 'edge',
 };
 
-export default function handler(req: NextRequest) {
+const font = fetch(new URL('../../assets/SpaceGrotesk-Light.ttf', import.meta.url)).then(
+  (res) => res.arrayBuffer(),
+);
+
+export default async function handler(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
+    const fontData = await font;
 
     // ?title=<title>
     const hasTitle = searchParams.has('title');
     const title = hasTitle
       ? searchParams.get('title')?.slice(0, 100)
-      : 'Default';
+      : '';
 
     return new ImageResponse(
       (
         <div
           style={{
-            backgroundColor: 'black',
-            backgroundSize: '150px 150px',
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: 'rgb(17 24 39)',
             height: '100%',
             width: '100%',
-            display: 'flex',
-            textAlign: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            flexWrap: 'nowrap',
+            padding: '60px'
           }}
         >
           <div
             style={{
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              justifyItems: 'center',
+              flexDirection: 'column',
+              textAlign: 'right',
+              color: 'rgb(17 24 39)',
+              backgroundColor: 'white',
+              fontSize: 40,
+              paddingRight: '10px',
+              paddingLeft: '10px',
+              paddingTop: '5px',
+              paddingBottom: '5px',
+              alignItems: 'baseline',
+              justifyContent: 'flex-end',
             }}
           >
-            <img
-              alt="Shumayl.com"
-              height={200}
-              src="data:image/svg+xml,%3Csvg width='116' height='100' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 44.7 1.101 L 45.8 1.101 L 46.5 21.301 L 44.9 21.301 A 80.493 80.493 0 0 0 40.926 14.801 Q 38.799 11.687 36.591 9.2 A 42.971 42.971 0 0 0 34.85 7.351 A 20.545 20.545 0 0 0 30.96 4.255 A 14.316 14.316 0 0 0 23.45 2.101 A 21.346 21.346 0 0 0 19.71 2.408 Q 17.672 2.771 16.048 3.564 A 10.509 10.509 0 0 0 13.9 4.951 A 9.254 9.254 0 0 0 10.53 11.677 A 12.564 12.564 0 0 0 10.5 12.551 Q 10.5 16.943 13.962 19.454 A 10.819 10.819 0 0 0 14.55 19.851 Q 18.323 22.226 23.701 23.777 A 51.983 51.983 0 0 0 24.5 24.001 A 623.228 623.228 0 0 1 26.887 24.653 Q 30.805 25.732 32.25 26.201 A 60.533 60.533 0 0 1 33.231 26.529 Q 34.788 27.063 36.85 27.851 A 32.285 32.285 0 0 1 38.772 28.652 Q 39.7 29.077 40.475 29.517 A 15.782 15.782 0 0 1 41.35 30.051 Q 43.044 31.164 44.926 32.84 A 43.409 43.409 0 0 1 45.05 32.951 A 14.517 14.517 0 0 1 47.238 35.391 A 12.603 12.603 0 0 1 48.1 36.801 A 20.633 20.633 0 0 1 50.412 43.458 A 27.831 27.831 0 0 1 50.8 48.201 Q 50.8 59.001 44.05 65.551 A 22.812 22.812 0 0 1 31.573 71.685 A 32.146 32.146 0 0 1 26.3 72.101 A 52.294 52.294 0 0 1 20.997 71.814 Q 18.287 71.537 15.285 70.993 A 93.528 93.528 0 0 1 13.25 70.601 A 591.357 591.357 0 0 0 11.515 70.249 Q 5.8 69.101 5.1 69.101 A 1.568 1.568 0 0 0 4.149 69.455 Q 3.262 70.125 2.417 72.061 A 16.479 16.479 0 0 0 2.4 72.101 L 1 72.101 L 0 48.301 L 1.7 48.301 Q 6.1 57.001 12.95 63.501 A 27.53 27.53 0 0 0 17.97 67.333 A 18.438 18.438 0 0 0 27.4 70.001 A 15.7 15.7 0 0 0 33.134 68.972 A 14.65 14.65 0 0 0 36.25 67.301 A 8.781 8.781 0 0 0 39.963 61.107 A 13.441 13.441 0 0 0 40.1 59.151 A 11.382 11.382 0 0 0 39.54 55.492 A 9.234 9.234 0 0 0 35.95 50.801 A 25.373 25.373 0 0 0 32.515 48.813 Q 30.675 47.918 28.429 47.11 A 62.947 62.947 0 0 0 24.15 45.751 Q 18.108 44.053 14.686 42.698 A 31.311 31.311 0 0 1 13.05 42.001 A 29.306 29.306 0 0 1 6.889 38.122 A 32.753 32.753 0 0 1 6.5 37.801 A 16.31 16.31 0 0 1 1.414 29.916 Q 0.578 27.219 0.37 23.947 A 35.281 35.281 0 0 1 0.3 21.701 A 20.945 20.945 0 0 1 6.551 6.501 A 25.851 25.851 0 0 1 6.65 6.401 A 21.055 21.055 0 0 1 17.43 0.657 A 31.159 31.159 0 0 1 24 0.001 A 40.154 40.154 0 0 1 31.5 0.733 A 48.212 48.212 0 0 1 35.05 1.551 A 155.101 155.101 0 0 0 37.053 2.077 Q 41.03 3.092 42.181 3.101 A 2.612 2.612 0 0 0 42.2 3.101 A 2.063 2.063 0 0 0 43.466 2.646 Q 44.104 2.163 44.665 1.164 A 8.354 8.354 0 0 0 44.7 1.101 Z' /%3E%3C/svg%3E"
-              style={{ margin: '0 30px' }}
-              width={232}
-            />
+            Shumayl.com
           </div>
           <div
             style={{
-              fontSize: 60,
-              fontStyle: 'normal',
-              letterSpacing: '-0.025em',
+              display: 'flex',
+              flexDirection: 'column',
+              textAlign: 'left',
+              fontSize: 70,
+              fontFamily: 'Grotesk',
               color: 'white',
-              marginTop: 30,
-              padding: '0 120px',
-              lineHeight: 1.4,
-              whiteSpace: 'pre-wrap',
+              marginTop: '20px',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
             }}
           >
-            {title}
+            {"> "}{title}{" _"}
           </div>
         </div>
       ),
       {
         width: 1200,
         height: 630,
+        fonts: [
+          {
+            name: 'Grotesk',
+            data: fontData,
+            style: 'normal',
+          },
+        ],
       },
     );
   } catch (e: any) {
