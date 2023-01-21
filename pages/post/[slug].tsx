@@ -2,6 +2,7 @@ import { promises as fs } from 'fs';
 import matter from 'gray-matter';
 import md from 'markdown-it';
 import Header from '../../components/Header'
+import MetaTags from '../../components/MetaTags';
 import ReturnHomeButton from '../../components/ReturnHomeButton';
 
 export async function getStaticPaths() {
@@ -38,24 +39,7 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
     
     return (
         <>
-            <head>
-                <title>{title}</title>
-                <meta property="og:image" content={`https://www.shumayl.com/api/og?title=${title}`}></meta>
-                <meta name="description" content={`${excerpt}`}></meta>
-
-                <meta property="og:url" content={`https://www.shumayl.com/pages/${slug}`}></meta>
-                <meta property="og:type" content="website"></meta>
-                <meta property="og:title" content={`${title}`}></meta>
-                <meta property="og:description" content={`${excerpt}`}></meta>
-                <meta property="og:image" content={`https://www.shumayl.com/api/og?title=${title}`}></meta>
-
-                <meta name="twitter:card" content="summary_large_image"></meta>
-                <meta property="twitter:domain" content="shumayl.com"></meta>
-                <meta property="twitter:url" content={`https://www.shumayl.com/pages/${slug}`}></meta>
-                <meta name="twitter:title" content={`${title}`}></meta>
-                <meta name="twitter:description" content={`${excerpt}`}></meta>
-                <meta name="twitter:image" content={`https://www.shumayl.com/api/og?title=${title}`}></meta>
-            </head>
+            <MetaTags title={title} excerpt={excerpt} slug={slug} domain="www.shumayl.com"/>
             <Header/>
             <div className='prose my-10 mx-auto'>
                 <h1 className="font-grotesk font-extralight text-gray-50">{title}</h1>
