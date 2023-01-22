@@ -6,24 +6,26 @@ date: '17-01-2022'
 tags: 
     - 'oss'
 ---
-Contributing to open-source software projects can be intimidating, with all the different standards and requirements between different codebases. However, there are a few core components to a great Pull Request. These general guidelines will help you craft a PR that's clear, well-written, and well-organized, increasing the chance that your code will be approved for implementation.
+Contributing to open-source software projects can be intimidating, with all the different standards and requirements between different codebases. Some projects have their own [contribution guidelines](https://github.com/einsteinpy/einsteinpy/blob/main/CONTRIBUTING.rst) you can refer to.  
+
+If the project you are working on do not have their own guidelines, fret not! This blog post will bring you through some basic elements for a great pull request. These general guidelines will help you craft a PR that's clear, well-written, and well-organized, all of which will increase the chance that your code will be approved for implementation.
 
 ## Communicating your intention
 Open-source software development is a collaborative process. As such, good communication is imperative to a good contribution. 
 
-It'd be a huge waste of time if you coded up a solution that ends up being rejected by the core maintainers of the project. To avoid this, you should communicate your intention by either providing a thorough description of your solution at any open Issues, or opening up an Issue that describes the problem and solution in a concise manner. Some projects even have Issue templates you can refer to.
+It would be a huge waste of time if you coded up a solution that ends up being rejected by the core maintainers of the project. To avoid this, you should communicate your intention by either providing a thorough description of your solution at any open Issues, or creating an Issue that concisely describes the problem and your solution. Some projects even have [Issue templates](https://github.com/stevemao/github-issue-templates) you can refer to.
 
 ## Implementing clean and maintainable code
-Once you have communicated the changes that you intend to make, now is the time to write up your code. It is crucial to keep your code as contained as possible, without messing with parts of the codebase that do not pertain your implementation.
+Once you have communicated the changes that you intend to make, now is the time to write your code. It is crucial to keep your code as contained as possible, without messing with parts of the codebase that do not pertain your implementation.
 
 Some codebases use a specific set of linters and code formatters, so be sure to check the project guidelines for any special tools they use to keep the code style consistent throughout the codebase. 
 
-Also, when committing your changes, be sure to have a descriptive message for the changes you are committing. A good commit is concise and addresses a complete logic, and you should not commit broken or 'halfway' code.
+Also, when committing your changes, be sure to have a descriptive message for the changes you are committing. A good commit is concise, and generally you should not commit broken or half-complete code.
 
-Some projects require you to rebase and squash your commits into a single commit to reduce clutter on the main branch, so be sure to check the project guidelines should they require it. 
+Some projects require you to [squash and rebase](https://adamj.eu/tech/2022/03/25/how-to-squash-and-rebase-a-git-branch/) your commits into a single commit to reduce clutter on the main branch, so be sure to check the project guidelines should they require it. 
 
 ## Writing tests
-After implementing your solution, you should ensure that your solution works. This is the point where you write up test cases for your implementation logic. It is also important to make sure that all other parts of the codebase do not break with the introduction of your code.
+After implementing your solution, you should ensure that your solution works. Writing test cases ensures that you do not introduce any nasty bugs into the codebase, and that all other parts of the codebase do not break with the introduction of your code.
 
 Optimally, you should also ensure that the test coverage for the project do not fall lower than they were before the implementation of your code. This means that you need to ensure 100% coverage for your newly-introduced code.
 
@@ -33,11 +35,9 @@ Writing documentation for your new implementation is as important as writing the
 Without proper documentation, the software you just wrote will be inaccessible for the end-users.
 
 ## Submitting a Pull Request
-When drafting a PR, you should ensure that you describe your changes in detail and link it to the related Issue(s). This allows maintainers easily understand the context for the change.
+When drafting a PR, you should ensure that you describe your changes in detail and link it to the related Issue(s). This allows maintainers to easily understand the context for the change.
 
 You should also request for help from the maintainers to review your code and ensure that they satisfy the requirements for the project. They can also give insights on a better method to implement your solution, as they are most likely more familiar with codebase than you are.
 
-## Updating the Changelog
-After a successful review, you can enjoy the hit of dopamine as you get to finally update the changelog and inscribe your name in the long list of contributors for the project.
-
-Congratulations! You have crafted a great contribution to open-source software.
+## Finish by Updating the Changelog
+After a successful review, you can enjoy the hit of dopamine as you get to finally update the changelog and inscribe your name in the long list of contributors for the project!
