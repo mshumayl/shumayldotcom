@@ -2,7 +2,7 @@ import { promises as fs } from 'fs';
 import matter from 'gray-matter';
 import md from 'markdown-it';
 import Header from '../../components/Header'
-import MetaTags from '../../components/MetaTags';
+import PostMetaTags from '../../components/PostMetaTags';
 import ReturnHomeButton from '../../components/ReturnHomeButton';
 
 export async function getStaticPaths() {
@@ -22,8 +22,6 @@ export async function getStaticProps({ params: { slug } }: { params: { slug: str
     const file = await fs.readFile(`posts/${slug}.md`);
     const { data: frontmatter, content } = matter(file);
 
-    console.log(content);
-
     return { 
         props: {
             frontmatter,
@@ -39,7 +37,7 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
     
     return (
         <>
-            <MetaTags title={title} excerpt={excerpt} slug={slug} domain="www.shumayl.com"/>
+            <PostMetaTags title={title} excerpt={excerpt} slug={slug} domain="www.shumayl.com"/>
             <Header/>
             <div className='prose my-10 mx-auto'>
                 <h1 className="font-grotesk font-extralight text-gray-50">{title}</h1>

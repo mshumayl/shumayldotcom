@@ -6,6 +6,7 @@ import LatestPosts from '../components/LatestPosts';
 
 import { promises as fs } from 'fs';
 import matter from 'gray-matter';
+import IndexMetaTags from '../components/IndexMetaTags';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -47,12 +48,7 @@ export async function getStaticProps(): Promise<{ props: { posts: Posts[] } }> {
 export default function Home({ posts }: { posts: Posts[] }) {
   return (
     <>
-      <Head>
-        <title>Shumayl.com</title>
-        <meta name="description" content="Shumayl.com" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <IndexMetaTags/>
       <div>
         <Header/>
         <LatestPosts posts={posts}/>

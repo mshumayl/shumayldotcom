@@ -10,7 +10,7 @@ interface Posts {
 
 const LatestPosts: React.FC<{posts: Posts[]}> = ({ posts }) => {
     
-    const latestPostSectionTitle = "<Latest Posts/>";
+    const latestPostSectionTitle = "Latest Posts";
 
     return (
         <>

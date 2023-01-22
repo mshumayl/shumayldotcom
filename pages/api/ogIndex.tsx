@@ -14,56 +14,49 @@ export default async function handler(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const fontData = await font;
 
-    // ?title=<title>
-    const hasTitle = searchParams.has('title');
-    const title = hasTitle
-      ? searchParams.get('title')?.slice(0, 100)
-      : '';
-
     return new ImageResponse(
       (
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: 'row',
             backgroundColor: 'rgb(17 24 39)',
             height: '100%',
             width: '100%',
-            padding: '60px'
+            padding: '60px',
+            textAlign: 'center',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <div
             style={{
               display: 'flex',
-              flexDirection: 'column',
-              textAlign: 'right',
+              flexDirection: 'row',
               color: 'rgb(17 24 39)',
               backgroundColor: 'white',
-              fontSize: 40,
+              fontSize: 50,
               paddingRight: '10px',
               paddingLeft: '10px',
               paddingTop: '5px',
               paddingBottom: '5px',
-              alignItems: 'baseline',
-              justifyContent: 'flex-end',
             }}
           >
-            Shumayl.com
+            {"Shumayl.com >"}
           </div>
           <div
             style={{
               display: 'flex',
-              flexDirection: 'column',
-              textAlign: 'left',
-              fontSize: 70,
-              fontFamily: 'Grotesk',
+              flexDirection: 'row',
               color: 'white',
-              marginTop: '20px',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
+              fontSize: 50,
+              paddingRight: '10px',
+              paddingLeft: '10px',
+              paddingTop: '5px',
+              paddingBottom: '5px',
             }}
           >
-            {"> "}{title}{" _"}
+            {"Notes on software_"}
           </div>
         </div>
       ),
