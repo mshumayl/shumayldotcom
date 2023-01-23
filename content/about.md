@@ -3,7 +3,7 @@ title: 'About'
 image: '/images/test-img.jpg'
 ---
 
-Hi, my name is Shumayl Asmawi, and I am a Systems Engineer at HP Inc. In my professional life, I specialize in developing analytics web apps and dashboards, creating in-house ETL pipelines, and building productivity tools for engineers. In my free time, I enjoy contributing to open source project on [my GitHub](https://github.com/mshumayl/).
+Hi, my name is Shumayl Asmawi, and I am a Systems Engineer at HP Inc. In my professional life, I specialize in developing analytics web apps and dashboards, creating in-house ETL pipelines, and building productivity tools for engineers. In my free time, I enjoy tinkering with open source projects on [my GitHub](https://github.com/mshumayl/).
 
 On this site, I share my insights, knowledge, and ideas on the things that I learn and discover in my work and personal projects. Most of my personal projects are open-sourced on [GitHub](https://github.com/mshumayl/).
 

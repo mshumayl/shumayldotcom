@@ -2,7 +2,7 @@
 title: 'Re-re-rebuilding My Blog Site'
 image: '/images/benjamin-lehman-EJU7A__krX0-unsplash.jpg'
 excerpt: 'DJ Khaled soundbite: Another one.'
-date: '15-01-2022'
+date: '2022-01-15'
 tags: 
     - 'web-dev'
 ---

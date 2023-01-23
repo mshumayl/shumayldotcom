@@ -2,7 +2,7 @@
 title: 'Contributing Code to OSS'
 image: '/images/my-life-through-a-lens-bq31L0jQAjU-unsplash.jpg'
 excerpt: 'Crafting the perfect PR.'
-date: '17-01-2022'
+date: '2022-01-17'
 tags: 
     - 'oss'
 ---
@@ -34,10 +34,10 @@ Writing documentation for your new implementation is as important as writing the
 
 Without proper documentation, the software you just wrote will be inaccessible for the end-users.
 
-## Submitting a Pull Request
+## Submitting a pull request
 When drafting a PR, you should ensure that you describe your changes in detail and link it to the related Issue(s). This allows maintainers to easily understand the context for the change.
 
 You should also request for help from the maintainers to review your code and ensure that they satisfy the requirements for the project. They can also give insights on a better method to implement your solution, as they are most likely more familiar with codebase than you are.
 
-## Finish by Updating the Changelog
-After a successful review, you can enjoy the hit of dopamine as you get to finally update the changelog and inscribe your name in the long list of contributors for the project!
+## Finish by updating the changelog
+After a successful review, you can enjoy the hit of dopamine as you get to finally update the projects `changelog.md` file and inscribe your name in the long list of contributors for the project!

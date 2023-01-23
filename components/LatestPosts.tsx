@@ -11,6 +11,8 @@ interface Posts {
 const LatestPosts: React.FC<{posts: Posts[]}> = ({ posts }) => {
     
     const latestPostSectionTitle = "Latest Posts";
+    
+    posts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
 
     return (
         <>
