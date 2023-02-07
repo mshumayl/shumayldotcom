@@ -46,14 +46,13 @@ export async function getStaticProps(): Promise<{ props: { posts: Posts[] } }> {
 
 
 export default function Home({ posts }: { posts: Posts[] }) {
-  const selectedTags = ""
 
   return (
     <>
       <IndexMetaTags/>
       <div>
         <Header/>
-        <LatestPosts posts={posts} selectedTags={selectedTags}/>
+        <LatestPosts posts={posts} />
       </div>      
     </>
   )

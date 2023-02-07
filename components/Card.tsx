@@ -6,9 +6,10 @@ import Tags from './Tags';
 interface PostSnippet {
     slug: string,
     frontmatter: { [key: string]: any; },
+    handleTagClick: (tag: string) => void;
 }
 
-const Card: React.FC<PostSnippet> = ({slug, frontmatter}) => {
+const Card: React.FC<PostSnippet> = ({slug, frontmatter, handleTagClick}: PostSnippet) => {
     
     const { title, image, excerpt, tags, date } = frontmatter;
 
@@ -22,7 +23,7 @@ const Card: React.FC<PostSnippet> = ({slug, frontmatter}) => {
                     <div className="shrink my-2 md:my-4 mx-5 md:mx-2 flex flex-col">
                         <Link href={`/post/${slug}`} className="mx-2 font-grotesk text-2xl font-black">{title}</Link>
                         <div className="mx-2 font-grotesk text-sm tracking-wider text-gray-100">{date}</div>
-                        <Tags tag={tags}/>
+                        <Tags tag={tags} onClick={handleTagClick} />
                         <div className="mx-2 font-grotesk text-gray-100">{excerpt}</div>
                     </div>
                 </div>
