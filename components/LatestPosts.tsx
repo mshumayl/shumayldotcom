@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Card from '../components/Card';
+import TagSelector from '../components/TagSelector';
 import { useState, useEffect } from 'react';
 
 interface Posts {
@@ -47,7 +48,10 @@ const LatestPosts: React.FC<{posts: Posts[]}> = ({ posts }) => {
     return (
         <>
             <div className="my-20">
-                <div className="font-grotesk font-extralight text-3xl mx-3 tracking-widest">{latestPostSectionTitle}</div>
+                <div className="mx-3">
+                    <div className="font-grotesk text-3xl font-extralight tracking-widest">{latestPostSectionTitle}</div>
+                    <TagSelector/>
+                </div>
                 {!filteredPosts && 'No posts found.'}
                 {filteredPosts.map(({ slug, frontmatter }) => (
                     <Card key={slug} slug={slug} frontmatter={frontmatter} handleTagClick={handleTagClick}/>
