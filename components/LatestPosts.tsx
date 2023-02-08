@@ -34,7 +34,7 @@ const LatestPosts: React.FC<{posts: Posts[]}> = ({ posts }) => {
     }, [selectedTags, posts]);
 
 
-    const handleTagClick = (tag: string) => {
+    const handleTagClick = (tag: string[]) => {
         setSelectedTags(tag[0]);
         console.log(posts)
     }
@@ -50,7 +50,7 @@ const LatestPosts: React.FC<{posts: Posts[]}> = ({ posts }) => {
             <div className="my-20">
                 <div className="mx-3">
                     <div className="font-grotesk text-3xl font-extralight tracking-widest">{latestPostSectionTitle}</div>
-                    <TagSelector/>
+                    <TagSelector handleTagClick={handleTagClick}/>
                 </div>
                 {!filteredPosts && 'No posts found.'}
                 {filteredPosts.map(({ slug, frontmatter }) => (

@@ -1,8 +1,12 @@
 import Link from 'next/link';
 
-const Tags: React.FC<{ tag: string, onClick: (tag: string) => void; }> = ({ tag, onClick }) => {
+interface TagsProps {
+    tag: string[];
+    onClick: (tag: string[]) => void;
+}
 
-    
+const Tags: React.FC<TagsProps> = ({ tag, onClick }: TagsProps) => {
+
     return (
         <>
             <div className="text-xs tracking-wider my-1 mx-1 px-2 py-1 flex flex-row bg-slate-700 rounded-full w-max">

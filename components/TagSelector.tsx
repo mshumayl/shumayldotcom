@@ -1,14 +1,19 @@
 import Link from 'next/link';
+import Tags from './Tags';
 
-const TagSelector: React.FC = () => {
+interface TagSelectorProps {
+    handleTagClick: (tag: string[]) => void;
+}
+
+const TagSelector: React.FC<TagSelectorProps> = ({handleTagClick}: TagSelectorProps) => {
     
+    const temp = ["oss"]
+
     return (
         <>
             <div className="flex flex-row font-grotesk md:tracking-widest">
                 <ul className="flex space-x-2 md:space-x-6 list-none">
-                    <Link href="/">Tag1</Link>
-                    <Link href="/">Tag2</Link>
-                    <Link href="/">Tag3</Link>
+                    <Tags tag={temp} onClick={handleTagClick}/>
                 </ul>
             </div>
         </>
