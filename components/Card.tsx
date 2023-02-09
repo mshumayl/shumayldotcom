@@ -3,13 +3,13 @@ import Image from 'next/image';
 import path from 'path';
 import Tags from './Tags';
 
-interface PostSnippet {
+interface CardProps {
     slug: string,
     frontmatter: { [key: string]: any; },
     handleTagClick: (tag: string[]) => void;
 }
 
-const Card: React.FC<PostSnippet> = ({slug, frontmatter, handleTagClick}: PostSnippet) => {
+const Card: React.FC<CardProps> = ({slug, frontmatter, handleTagClick}: CardProps) => {
     
     const { title, image, excerpt, tags, date } = frontmatter;
 

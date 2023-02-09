@@ -3,23 +3,23 @@ import Card from '../components/Card';
 import TagSelector from '../components/TagSelector';
 import { useState, useEffect } from 'react';
 
-interface Posts {
+interface LatestPostsProps {
     slug: string;
     frontmatter: { [key: string]: any }
 }
   
 
-function filterPostsByTags(posts: Posts[], selectedTags = "") {
+function filterPostsByTags(posts: LatestPostsProps[], selectedTags = "") {
     console.log("In filterPostsByTags")
     console.log(selectedTags)
     return posts.filter((p) => p.frontmatter.tags[0].toLowerCase() == selectedTags); //modify indexing here to accept more than 1 tag
 }
 
 
-const LatestPosts: React.FC<{posts: Posts[]}> = ({ posts }) => {
+const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
     
     const [selectedTags, setSelectedTags] = useState("");
-    const [filteredPosts, setFilteredPosts] = useState<Posts[]>([]);
+    const [filteredPosts, setFilteredPosts] = useState<LatestPostsProps[]>([]);
 
 
     useEffect(() => {
