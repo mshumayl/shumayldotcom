@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 interface TagsProps {
+    key?: number; //optional, only for mapped tags
     tag: string[];
     onClick: (tag: string[]) => void;
 }

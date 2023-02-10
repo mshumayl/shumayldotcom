@@ -35,7 +35,7 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
 
 
     const handleTagClick = (tag: string[]) => {
-        setSelectedTags(tag[0]);
+        setSelectedTags(tag[0]); // TODO: Tags are currently arrays. Tweak this to support posts with multitags in the future. 
         console.log(posts)
     }
 
@@ -54,7 +54,7 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
                 </div>
                 {!filteredPosts && 'No posts found.'}
                 {filteredPosts.map(({ slug, frontmatter }) => (
-                    <Card key={slug} slug={slug} frontmatter={frontmatter} handleTagClick={handleTagClick}/>
+                    <Card slug={slug} frontmatter={frontmatter} handleTagClick={handleTagClick}/>
                 ))}
             </div>
         </>

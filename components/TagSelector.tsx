@@ -16,8 +16,8 @@ const TagSelector: React.FC<TagSelectorProps> = ({handleTagClick}: TagSelectorPr
                     <div>
                         Tags:
                     </div>
-                    {temp.map((t) => (
-                        <Tags tag={t} onClick={handleTagClick}/>
+                    {temp.map((t, index) => (
+                        <Tags key={index} tag={t} onClick={handleTagClick}/>
                     ))}
                 </ul>
             </div>
