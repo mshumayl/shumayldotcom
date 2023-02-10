@@ -7,7 +7,7 @@ interface TagSelectorProps {
 
 const TagSelector: React.FC<TagSelectorProps> = ({handleTagClick}: TagSelectorProps) => {
     
-    const temp = ["oss"]
+    const temp = [["all"], ["oss"], ["machine-learning"], ["web-dev"]]
 
     return (
         <>
@@ -16,9 +16,9 @@ const TagSelector: React.FC<TagSelectorProps> = ({handleTagClick}: TagSelectorPr
                     <div>
                         Tags:
                     </div>
-                    <Tags tag={["all"]} onClick={handleTagClick}/>
-                    <Tags tag={temp} onClick={handleTagClick}/>
-                    <Tags tag={temp} onClick={handleTagClick}/>
+                    {temp.map((t) => (
+                        <Tags tag={t} onClick={handleTagClick}/>
+                    ))}
                 </ul>
             </div>
         </>
