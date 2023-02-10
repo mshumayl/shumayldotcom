@@ -23,7 +23,7 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
 
 
     useEffect(() => {
-        if (selectedTags === "") {
+        if (selectedTags === "" || selectedTags === "all") {
             console.log("No tags selected")
             setFilteredPosts(posts);
         } else {

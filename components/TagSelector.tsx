@@ -11,8 +11,13 @@ const TagSelector: React.FC<TagSelectorProps> = ({handleTagClick}: TagSelectorPr
 
     return (
         <>
-            <div className="flex flex-row font-grotesk md:tracking-widest">
-                <ul className="flex space-x-2 md:space-x-6 list-none">
+            <div className="flex flex-row mt-5 mb-0 font-grotesk md:tracking-widest">
+                <ul className="flex space-x-2 md:space-x-4 items-center list-none">
+                    <div>
+                        Tags:
+                    </div>
+                    <Tags tag={["all"]} onClick={handleTagClick}/>
+                    <Tags tag={temp} onClick={handleTagClick}/>
                     <Tags tag={temp} onClick={handleTagClick}/>
                 </ul>
             </div>
