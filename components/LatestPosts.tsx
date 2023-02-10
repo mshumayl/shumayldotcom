@@ -54,7 +54,7 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
                 </div>
                 {!filteredPosts && 'No posts found.'}
                 {filteredPosts.map(({ slug, frontmatter }) => (
-                    <Card slug={slug} frontmatter={frontmatter} handleTagClick={handleTagClick}/>
+                    <Card key={slug} slug={slug} frontmatter={frontmatter} handleTagClick={handleTagClick}/>
                 ))}
             </div>
         </>
