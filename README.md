@@ -1,8 +1,7 @@
-## What Is This
-The time has come again for me to rebuild my [blog site](www.shumayl.com). 
+## Shumayl.com
+The time has come again for me to rebuild my [personal site](https://www.shumayl.com). 
 
 ## Stack
-To keep it relatively simple, I am going to use:
-- NextJS
-- Frontmatter
+- Next.js
+- Gray-matter
 - Tailwind
