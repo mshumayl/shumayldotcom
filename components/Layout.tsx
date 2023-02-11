@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-interface Props {
+interface LayoutProps {
     children: ReactNode;
 }
 
-const Layout: React.FC<Props> = ({children}) => {
+const Layout: React.FC<LayoutProps> = ({children}) => {
     
     return (
         <>
