@@ -12,13 +12,15 @@ const TagSelector: React.FC<TagSelectorProps> = ({handleTagClick}: TagSelectorPr
     return (
         <>
             <div className="flex flex-row mt-5 mb-0 font-grotesk md:tracking-widest">
-                <ul className="flex space-x-2 md:space-x-4 items-center list-none">
+                <ul className="flex space-x-1 md:space-x-2 sm:items-center list-none">
                     <div>
                         Tags:
                     </div>
-                    {temp.map((t, index) => (
-                        <Tags key={index} tag={t} onClick={handleTagClick}/>
-                    ))}
+                    <div className="flex flex-row flex-wrap md:space-x-2">
+                        {temp.map((t, index) => (
+                            <Tags key={index} tag={t} onClick={handleTagClick}/>
+                        ))}
+                    </div>
                 </ul>
             </div>
         </>
