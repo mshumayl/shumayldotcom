@@ -3,11 +3,10 @@ import Tags from './Tags';
 
 interface TagSelectorProps {
     handleTagClick: (tag: string[]) => void;
+    tags: string[][] // Nested arrs for multitags
 }
 
-const TagSelector: React.FC<TagSelectorProps> = ({handleTagClick}: TagSelectorProps) => {
-    
-    const temp = [["all"], ["oss"], ["machine-learning"], ["web-dev"]]
+const TagSelector: React.FC<TagSelectorProps> = ({handleTagClick, tags}: TagSelectorProps) => {
 
     return (
         <>
@@ -17,7 +16,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({handleTagClick}: TagSelectorPr
                         Tags:
                     </div>
                     <div className="flex flex-row flex-wrap md:space-x-2">
-                        {temp.map((t, index) => (
+                        {tags.map((t, index) => (
                             <Tags key={index} tag={t} onClick={handleTagClick}/>
                         ))}
                     </div>

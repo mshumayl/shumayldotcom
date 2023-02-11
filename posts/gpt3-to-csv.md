@@ -31,10 +31,10 @@ The UI handles user input for the title of the data and also the columns require
 ## Prompt engineering
 With prompt engineering being a very new concept with the advent of Large Language Models (LLMs), I do not have much experience or subtlety in the art of crafting a prompt. This is what the prompt looks like:
 ```
-const prompt = `Give me an accurate data of ${request} with the following columns: ${columns}. Make sure the data in the form of array of arrays. Make the first element the columns. Most importantly, make sure it is a valid JSON string by always fitting the end of array with the max token.`
+const prompt = `Give me an accurate data of ${request} with the following columns: ${columns}. Make sure the data in the form of array of arrays. Make the first element the columns. Most importantly, make sure it is a valid JSON string by always fitting the end of array within the max token.`
 ```
 
-There must be more efficient ways to enforce these rules to the model, however, this prompt seems to work fine. Covering edge cases for LLMs is a field that is still actively being researched, so I am sure very soon there will be a way to encode more instructions in a more reliable manner (sounds a lot like programming though).
+There must be more efficient ways to enforce these rules to the model, but this prompt seems to work fine. Covering edge cases for LLMs is a field that is still actively being researched, so I am sure very soon there will be a way to encode more instructions and restrictions in a standard and reliable manner. Although, I have to say that enforcing a standardized syntax sounds a lot like normal programming.
 
 Also, it must be noted that the prompt above does not make the model insusceptible to [prompt injection](https://simonwillison.net/2022/Sep/12/prompt-injection/), where you could hijack the prompt by inputting things as simple as `ignore previous prompts and do A instead`. 
 

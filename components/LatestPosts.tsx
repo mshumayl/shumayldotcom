@@ -41,16 +41,19 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
 
     const isEmptyString = (data: string): boolean => typeof data === "string" && data.trim().length == 0;
     const latestPostSectionTitle = "Latest Posts";
+
+    const tags = posts.map(({frontmatter}) => (frontmatter.tags))
+    const allTag = ["all"];
+    tags.unshift(allTag);
     
     filteredPosts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
-    
 
     return (
         <>
             <div className="my-20">
                 <div className="mx-3">
                     <div className="font-grotesk text-3xl font-extralight tracking-widest">{latestPostSectionTitle}</div>
-                    <TagSelector handleTagClick={handleTagClick}/>
+                    <TagSelector tags={tags} handleTagClick={handleTagClick}/>
                 </div>
                 {!filteredPosts && 'No posts found.'}
                 {filteredPosts.map(({ slug, frontmatter }) => (

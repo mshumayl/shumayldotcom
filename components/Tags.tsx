@@ -8,10 +8,14 @@ interface TagsProps {
 
 const Tags: React.FC<TagsProps> = ({ tag, onClick }: TagsProps) => {
 
+    console.log(tag)
+
     return (
         <>
-            <div className="text-xs tracking-wider my-1 mx-1 items-center px-2 py-1 flex flex-row bg-slate-700 rounded-full w-max hover:bg-slate-600">
-                <button onClick={() => onClick(tag)}>
+            <div className="">
+                <button className="flex flex-row text-xs tracking-wider my-1 mx-1 items-center px-2 py-1 rounded-lg w-max
+             bg-slate-700 hover:bg-slate-600 focus:bg-slate-500" 
+             onClick={() => onClick(tag)}>
                     { tag }
                 </button>
             </div>
