@@ -12,4 +12,4 @@ You can find me on [LinkedIn](https://www.linkedin.com/in/shumayl-111/) and [Mas
 Other links you should check out:
 - [My source code for an AI tool that generates CSV files from your request](https://github.com/mshumayl/gpt-to-csv), and demo [here](https://www.linkedin.com/feed/update/urn:li:activity:7014422650324213760/).
 - [ML models to predict traffic congestion](https://github.com/mshumayl/traffic-prediction).
-- [A portfolio of my data-sciencey stuff](https://mshumayl.github.io/data-science-portfolio/).
+- [A portfolio of my data-sciencey stuff](https://mshumayl.github.io/ml-analytics-portfolio/).
