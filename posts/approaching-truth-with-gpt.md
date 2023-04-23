@@ -59,7 +59,7 @@ Of course, more context document can be provided such as web pages, but this com
 Without further context documents, the drawback is that the summaries will be rudimentary paraphrasings of the verse translation. On the other hand, we avoid "poisoning the well" by not including any further context other than a reputable translation of the verse.
 
 ## UI/UX considerations
-It is important to let the users realize that any AI-generated text summary cannot be trusted as authoritative in any way. The AI Generate Note is a feature that generates notes _on behalf_ of the user. To get this idea across, after the generation, the user can add and edit the generated text as they see fit before confirming the addition of the note.
+It is important to let the users realize that any AI-generated text summary cannot be trusted as authoritative in any way. The AI Generate Note is a feature that generates notes on behalf of the user. To get this idea across, after the generation, the user can add and edit the generated text as they see fit before confirming the addition of the note.
 
 ![AI-Daleel's AI Note Generation feature.](/images/aai-daleel-notes-generation.jpg)
 *AI-Daleel's AI Note Generation feature.*
