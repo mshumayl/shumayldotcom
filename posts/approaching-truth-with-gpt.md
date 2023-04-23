@@ -1,6 +1,6 @@
 ---
 title: 'Approaching Truth with GPT'
-image: '/images/my-life-through-a-lens-bq31L0jQAjU-unsplash.jpg'
+image: '/images/markus-winkler-yYpmCA32U_M-unsplash.jpg'
 excerpt: '.'
 date: '2023-04-23'
 tags: 
