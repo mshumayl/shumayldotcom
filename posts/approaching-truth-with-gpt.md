@@ -62,6 +62,9 @@ Without further context documents, the drawback is that the summaries will be ru
 ## UI/UX considerations
 It is important to let the users realize that any AI-generated text summary cannot be trusted as authoritative in any way. The AI Generate Note is a feature that generates notes _on behalf_ of the user. To get this idea across, after the generation, the user can add and edit the generated text as they see fit before confirming the addition of the note.
 
+![AI-Daleel's AI Note Generation feature.](/images/aai-daleel-notes-generation.jpg)
+*AI-Daleel's AI Note Generation feature.*
+
 ## Future improvements
 We are aware of the dangers and issues that come with unreliable summarization of Quranic text, and it is a matter we consider seriously throughout the development of this product. As of now, we are able to do so by limiting the context to the verse translation, at a cost of a lower level of insights generated.
 
