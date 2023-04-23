@@ -1,11 +1,10 @@
 ---
 title: 'Approaching Truth with GPT'
 image: '/images/markus-winkler-yYpmCA32U_M-unsplash.jpg'
-excerpt: '.'
+excerpt: 'How do we optimize towards Truth for AI-Daleel?'
 date: '2023-04-23'
 tags: 
-    - 'gpt'
-    - 'ai'
+    - 'machine-learning'
 ---
 Recently, I released AI-Daleel, a GPT-powered al-Quran research tool. It is of utmost importance that any tool which aims to aid Islamic study adhere to the strict quality standards as shown to us by the tradition of Islamic scholarship and academia.
 
