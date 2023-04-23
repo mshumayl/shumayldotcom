@@ -6,6 +6,10 @@ date: '2023-04-23'
 tags: 
     - 'machine-learning'
 ---
+
+![AI-Daleel landing page.](/images/ai-daleel-landing-page.jpg)
+*AI-Daleel landing page.*
+
 Recently, I released [AI-Daleel](https://www.ai-daleel.com/), a GPT-powered al-Quran research tool. It is of utmost importance that any tool which aims to aid Islamic study adhere to the strict quality standards as shown to us by the tried and tested traditions of Islamic scholarship.
 
 ## How reliable is the GPT architecture?
