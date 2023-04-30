@@ -10,9 +10,8 @@ interface LatestPostsProps {
   
 
 function filterPostsByTags(posts: LatestPostsProps[], selectedTags = "") {
-    console.log("In filterPostsByTags")
-    console.log(selectedTags)
-    return posts.filter((p) => p.frontmatter.tags[0].toLowerCase() == selectedTags); //modify indexing here to accept more than 1 tag
+    // console.log(selectedTags)
+    return posts.filter((p) => p.frontmatter.tags[0].toLowerCase().toString() == selectedTags); //modify indexing here to accept more than 1 tag
 }
 
 
@@ -24,30 +23,30 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
 
     useEffect(() => {
         if (selectedTags === "" || selectedTags === "all") {
-            console.log("No tags selected")
             setFilteredPosts(posts);
         } else {
-            console.log("Filter by")
-            console.log(selectedTags)
             setFilteredPosts(filterPostsByTags(posts, selectedTags));
         }
     }, [selectedTags, posts]);
 
 
-    const handleTagClick = (tag: string[]) => {
-        setSelectedTags(tag[0]); // TODO: Tags are currently arrays. Tweak this to support posts with multitags in the future. 
-        console.log(posts)
+    const handleTagClick = (tag: string) => {
+        setSelectedTags(tag); // TODO: Tags are currently arrays. Tweak this to support posts with multitags in the future. 
     }
+
 
     const isEmptyString = (data: string): boolean => typeof data === "string" && data.trim().length == 0;
     const latestPostSectionTitle = "Latest Posts";
 
-    const tags = posts.map(({frontmatter}) => (frontmatter.tags))
-    const allTag = ["all"];
+    const tags = posts.map(({frontmatter}) => (frontmatter.tags.toString()))
+    const allTag = "all";
     tags.unshift(allTag);
     const uniqueTags = [...new Set(tags)];
-    
+
     filteredPosts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
+
+    // console.log("tags:", tags);
+    // console.log("uniqueTags:", uniqueTags);
 
     return (
         <>

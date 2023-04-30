@@ -2,8 +2,8 @@ import Link from 'next/link';
 import Tags from './Tags';
 
 interface TagSelectorProps {
-    handleTagClick: (tag: string[]) => void;
-    tags: string[][] // Nested arrs for multitags
+    handleTagClick: (tag: string) => void;
+    tags: string[] // Nested arrs for multitags
 }
 
 const TagSelector: React.FC<TagSelectorProps> = ({handleTagClick, tags}: TagSelectorProps) => {

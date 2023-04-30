@@ -6,7 +6,7 @@ import Tags from './Tags';
 interface CardProps {
     slug: string,
     frontmatter: { [key: string]: any; },
-    handleTagClick: (tag: string[]) => void;
+    handleTagClick: (tag: string) => void;
 }
 
 const Card: React.FC<CardProps> = ({slug, frontmatter, handleTagClick}: CardProps) => {

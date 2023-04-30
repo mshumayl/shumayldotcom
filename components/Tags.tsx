@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 interface TagsProps {
     key?: number; //optional, only for mapped tags
-    tag: string[];
-    onClick: (tag: string[]) => void;
+    tag: string;
+    onClick: (tag: string) => void;
 }
 
 const Tags: React.FC<TagsProps> = ({ tag, onClick }: TagsProps) => {
