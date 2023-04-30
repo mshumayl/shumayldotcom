@@ -8,8 +8,6 @@ interface TagsProps {
 
 const Tags: React.FC<TagsProps> = ({ tag, onClick }: TagsProps) => {
 
-    console.log(tag)
-
     return (
         <>
             <div className="">

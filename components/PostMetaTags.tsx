@@ -1,5 +1,6 @@
 import Head from 'next/head';
 
+
 const PostMetaTags: React.FC<{title: string, excerpt: string, slug:string, domain: string}> = ({ title, excerpt, slug, domain }) => {
     
     return (
