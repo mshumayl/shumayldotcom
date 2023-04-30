@@ -45,6 +45,7 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
     const tags = posts.map(({frontmatter}) => (frontmatter.tags))
     const allTag = ["all"];
     tags.unshift(allTag);
+    const uniqueTags = [...new Set(tags)];
     
     filteredPosts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
 
@@ -53,7 +54,7 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
             <div className="my-20">
                 <div className="mx-3">
                     <div className="font-grotesk text-3xl font-extralight tracking-widest">{latestPostSectionTitle}</div>
-                    <TagSelector tags={tags} handleTagClick={handleTagClick}/>
+                    <TagSelector tags={uniqueTags} handleTagClick={handleTagClick}/>
                 </div>
                 {!filteredPosts && 'No posts found.'}
                 {filteredPosts.map(({ slug, frontmatter }) => (
