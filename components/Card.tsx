@@ -13,6 +13,10 @@ const Card: React.FC<CardProps> = ({slug, frontmatter, handleTagClick}: CardProp
     
     const { title, image, excerpt, tags, date } = frontmatter;
 
+    //Decompose tags here
+    console.log(tags)
+
+
     return (
         <>
             <div className="justify-items-center w-full my-10 min-h-fit rounded-3xl">
@@ -23,7 +27,12 @@ const Card: React.FC<CardProps> = ({slug, frontmatter, handleTagClick}: CardProp
                     <div className="shrink my-2 md:my-4 mx-5 md:mx-2 flex flex-col">
                         <Link href={`/post/${slug}`} className="mx-2 font-grotesk text-2xl font-black">{title}</Link>
                         <div className="mx-2 font-grotesk text-sm tracking-wider text-gray-100">{date}</div>
-                        <Tags tag={tags} onClick={handleTagClick} />
+                        {/* Map tags here */}
+                        <div className="flex flex-row">
+                            {tags.map((t: string, idx: number) => (
+                                <Tags key={idx} tags={t} onClick={handleTagClick} />
+                            ))}
+                        </div>
                         <div className="mx-2 font-grotesk text-gray-100 pb-2">{excerpt}</div>
                     </div>
                 </div>

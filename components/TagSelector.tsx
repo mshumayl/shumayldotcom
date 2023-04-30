@@ -17,7 +17,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({handleTagClick, tags}: TagSele
                     </div>
                     <div className="flex flex-row flex-wrap md:space-x-2">
                         {tags.map((t, index) => (
-                            <Tags key={index} tag={t} onClick={handleTagClick}/>
+                            <Tags key={index} tags={t} onClick={handleTagClick}/>
                         ))}
                     </div>
                 </ul>
