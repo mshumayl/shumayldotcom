@@ -42,7 +42,13 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
             <div className='prose my-10 mx-auto'>
                 <h1 className="font-grotesk font-extralight text-gray-50">{title}</h1>
                 <div className="font-grotesk text-sm tracking-wider text-gray-50">{date}</div>
-                <div className="font-grotesk text-gray-300 [&>p>a]:text-gray-100 leading-loose [&>ul>li>a]:text-gray-100 [&>h2]:text-gray-100 [&>h3]:text-gray-200 [&>h4]:text-gray-200 [&>p>code]:text-gray-100 [&>p>code]:bg-gray-700 [&>p>em]:flex [&>p>em]:justify-center [&>p>img]:flex [&>p>img]:justify-center" dangerouslySetInnerHTML={{ __html: md().render(content) }}/>
+                <div className="font-grotesk text-gray-300 [&>p>a]:text-gray-100 leading-loose
+                 [&>ul>li>a]:text-gray-100 [&>h2]:text-gray-100 [&>h3]:text-gray-200 [&>h4]:text-gray-200 
+                 [&>p>code]:text-gray-100 [&>p>code]:bg-gray-700 
+                 [&>p>em]:flex [&>p>em]:justify-center [&>p>em]:text-gray-400 [&>p>em]:text-sm 
+                 [&>p>img]:flex [&>p>img]:mx-auto [&>p>img]:border-2 [&>p>img]:border-gray-700 [&>p>img]:rounded-xl
+                 [&>pre]:m-auto [&>pre]:border-2 [&>pre]:border-gray-700 
+                 " dangerouslySetInnerHTML={{ __html: md().render(content) }}/>
                 <div>
                     <ReturnHomeButton/>
                 </div>
