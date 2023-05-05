@@ -62,6 +62,8 @@ export async function getServerSideProps(context: GetSessionParams | undefined) 
 ```
 *Auth session check using getServerSideProps for protected routes.*
 
+As you see in the above code block, we can protect the whole page from being accessed with unauthenticated clients with `getServerSideProps`. This means that on page load, Next.js will return a redirect to the sign-in page if there is no valid session object available.
+
 The rendering approach you choose with Next.js will depend on your application's specific requirements. A good mental model is to think about when do you need the data to be made available on the client-side. Then, you should also think about if the data is unique for each session or whether it is a static data that can be fetched once during build time. Ultimately, you should think about the trade-offs you are willing to make between performance, availability, and complexity.
 
 #### tRPC
