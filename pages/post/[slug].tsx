@@ -4,6 +4,14 @@ import md from 'markdown-it';
 import Header from '../../components/Header'
 import PostMetaTags from '../../components/PostMetaTags';
 import ReturnHomeButton from '../../components/ReturnHomeButton';
+import rehypeDocument from 'rehype-document';
+import rehypeStringify from 'rehype-stringify';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import remarkSlug from 'remark-slug';
+import remarkToc from 'remark-toc';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import { unified } from 'unified';
 
 export async function getStaticPaths() {
     const files = await fs.readdir('posts');
@@ -22,10 +30,23 @@ export async function getStaticProps({ params: { slug } }: { params: { slug: str
     const file = await fs.readFile(`posts/${slug}.md`);
     const { data: frontmatter, content } = matter(file);
 
+    const processor = unified()
+        .use(remarkParse)
+        .use(remarkSlug)
+        .use(remarkToc)
+        .use(remarkRehype)
+        .use(rehypeDocument, {title: 'Contents'})
+        .use(rehypeAutolinkHeadings)
+        .use(rehypeStringify);
+
+    const htmlContent = await processor.process(content)
+
+    const htmlString = htmlContent.toString()
+
     return { 
         props: {
             frontmatter,
-            content,
+            content: htmlString,
             slug
         }
      };
@@ -49,7 +70,7 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
                  [&>p>img]:flex [&>p>img]:mx-auto [&>p>img]:border-2 [&>p>img]:border-gray-700 [&>p>img]:rounded-xl
                  [&>pre]:m-auto [&>pre]:border-2 [&>pre]:border-gray-700 
                  [&>ol>li>code]:text-gray-100 [&>ol>li>code]:bg-gray-700 [&>ol>li>code]:rounded-md [&>ol>li>code]:p-0.5 [&>ol>li>code]:m-0.5 [&>ol>li>code]:text-xs
-                 " dangerouslySetInnerHTML={{ __html: md().render(content) }}/>
+                 " dangerouslySetInnerHTML={{ __html: content }}/>
                 <div>
                     <ReturnHomeButton/>
                 </div>
