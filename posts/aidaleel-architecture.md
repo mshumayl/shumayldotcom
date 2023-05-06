@@ -6,6 +6,7 @@ date: '2023-04-30'
 tags: 
     - 'machine-learning'
     - 'web-dev'
+    - 'systems'
 ---
 
 
@@ -13,7 +14,7 @@ tags:
 *AI-Daleel system architecture.*
 
 ## AI-Daleel
-Recently, I published [AI-Daleel](https://www.ai-daleel.com/), a personal side project I have been working on in my free time in Ramadan. Tersely, it's a tool that let's you search for Quranic verses with natural language search terms and rough transliterations. 
+Recently, I published [AI-Daleel](https://www.ai-daleel.com/), a personal side project I have been working on in my free time in Ramadan. It's a tool that lets you search for Quranic verses with natural language search terms and rough transliterations. 
 
 It addresses a personal pain point of mine when it comes to Googling for Quranic verses. It's unreliable, messy, and slow. AI-Daleel aims to solve this.
 
@@ -21,6 +22,8 @@ On top of the search feature, AI-Daleel also lets you:
 - Bookmark verses
 - Add notes to your verses
 - Generate notes based on verse translations
+
+I have learnt a lot throughout the building of this project, and I would like to share it here to better cement the knowledge in my mind.
 
 In this post, we will explore the system architecture of AI-Daleel, with a deep dive on the tech stack and cloud technologies used.
 
@@ -31,7 +34,25 @@ There are 3 core components that make up AI-Daleel:
 3. Serverless function — This is how the quota refresh is implemented.
 
 ### 1. Web application
-The web application is a TypeScript app built on the [T3 stack](https://create.t3.gg/). It consists of five elements:
+The web application is a TypeScript app built on the [T3 stack](https://create.t3.gg/). It is deployed on [AWS Amplify Hosting](https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html), a cloud platform for hosting full-stack serverless web applications with CI/CD capabilities. It allows you to deploy your code simply by pushing to your GitHub repository. You can even enable preview deployments by connecting your feature branch to AWS Amplify. The build settings for deployments can be set using a config `amplify.yml` file, where you can define the pre-build and build commands, the base build directory, and environment variables. It is also integrated with [Amazon CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html), where you can monitor the request logs for your application and perform traffic analytics.
+
+For now, a serverless platform like AWS Amplify is the most economical option for deploying AI-Daleel as compared to VPS/VM solutions like AWS EC2. On AWS Amplify, we are only billed for requests made to the application endpoints and the duration of build. On the other hand, if we were to deploy it into an EC2 instance, we will be billed for every second the server is running, regardless of the amount of traffic the application is receiving.
+
+![AWS Amplify deployment console.](/images/amplify-deployment.jpg)
+*AWS Amplify deployment console.*
+
+Naturally, being a Next.js project, it was initially published on Vercel. However, on the eve of Eid, hours before release, the authentication procedure keeps on failing, preventing users from logging into the app. After troubleshooting, it was found that the root cause for this failure is that the Serverless Function responsible for handling the authentication procedure with third-party auth providers keeps timing out, and there is no way to increase the timeout duration on Vercel.
+
+After yeeting the code from Vercel and deploying it on AWS Amplify, with no change to the code at all, not only is it able to run the authentication procedure successfully, but all server-side fetches obtained a remarkable speed up over the Vercel deployment. This instantly turned me into an Amplify fanboy.
+
+The web application code itself consists of the following components:
+- Next.js
+- tRPC
+- Prisma
+- Tailwind CSS
+- NextAuth.js
+- OpenAI API
+
 #### Next.js
 Next.js is an open-source full-stack React framework that allows us to run both front-end and back-end code in a single repository. It comes with all the usual React goodness, such as client states handling, re-rendering, and componentization. Additionally, Next.js offers support for pre-rendering HTML documents on the server via Static Site Generation (SSG) and Server-Side Rendering, which can be configured independently for each page in the `/pages` directory. Next.js automatically defines a route for every file in this directory, as it uses folder-based routing instead of controller-attached route definitions found in MVC-based frameworks.
 
@@ -65,7 +86,6 @@ export async function getServerSideProps(context: GetSessionParams | undefined) 
 As you see in the above code block, we can protect the whole page from being accessed with unauthenticated clients with `getServerSideProps`. This means that on page load, Next.js will return a redirect to the sign-in page if there is no valid session object available.
 
 The rendering approach you choose with Next.js will depend on your application's specific requirements. A good mental model is to think about when do you need the data to be made available on the client-side. Then, you should also think about if the data is unique for each session or whether it is a static data that can be fetched once during build time. Ultimately, you should think about the trade-offs you are willing to make between performance, availability, and complexity.
-
 #### tRPC
 Conventionally, API endpoints are interfaced between the server and the client via RESTful JSON. There is no way to ensure type-safety with REST, as it is essentially a string of JSON that you will have to parse on the client-side, which historically has been a huge source of headache for developers worldwide. tRPC fixes this. 
 
@@ -238,9 +258,9 @@ However, doing this is considered anti-pattern as it defeats the purpose of usin
 
 The Tailwind documentations provide us with a [neat guideline](https://tailwindcss.com/docs/reusing-styles) on the best-practices on reusing styles.
 #### NextAuth.js
-Authentication is a crucial functionality that needs to be implemented in AI-Daleel. As each call of the OpenAI API comes with a cost, we need a reliable way to ensure that the calls are made from valid users and not bots. We also need a way to track usage and impose quota limits to avoid DDoS and spam. We also want to [avoid rolling our own auth](https://twitter.com/mgonto/status/1652414080550936576?s=20) with just a simple email and a hashed password stored in DB as it is not secure enough. For this, we will need to make use of an authentication framework.
+Authentication and authorization are crucial core functionalities that need to be implemented in AI-Daleel. As each call of the OpenAI API comes with a cost, we need a reliable way to ensure that the calls are made from valid users and not bots. We also need a way to track usage and impose quota limits to avoid DDoS and spam. We also want to [avoid rolling our own auth](https://twitter.com/mgonto/status/1652414080550936576?s=20) with just a simple email and a hashed password stored in database as it is not secure enough. For this, we will need to make use of a fully-fledged authentication framework.
 
-NextAuth.js is an open-source authentication framework that aims to simplify the implementation of secure authentication for Next.js. It handles handshakes with third-party identity providers, manages client sessions via tokens and cookies, token refreshes, among many other things.
+NextAuth.js is an open-source authentication framework that aims to simplify the implementation of secure authentication for Next.js. It handles handshakes with third-party identity providers, manages client sessions via tokens and cookies, enforces token refreshes, among many other things.
 
 It is tied to the database via Prisma, hence the session-related tables can be defined in `schema.prisma` along with other application tables.
 
@@ -265,9 +285,9 @@ model Account {
 ```
 *Account table used by NextAuth to handle user accounts in schema.prisma.*
 
-Due to inherent security risks, NextAuth [strongly advises against the conventional credentials-based authentication](https://next-auth.js.org/providers/credentials), where hashed user passwords are stored in the application database along with the username. Instead, it advocates for the usage of authentication providers such as GoogleAuth, Auth0, and Azure Active Directory. For AI-Daleel, we use Google, GitHub, and Discord as our primary authentication providers. These are all big software companies with whole divisions that are in charge of authentication and responding to vulnerabilities, so we can be assured that our users are secure. 
+Due to inherent security risks, NextAuth [strongly advises against the conventional credentials-based authentication](https://next-auth.js.org/providers/credentials), where hashed user passwords are stored in the application database along with the username. Instead, it advocates for the usage of authentication providers such as Google Auth, Auth0, and Azure Active Directory. For AI-Daleel, we use Google, GitHub, and Discord as our primary authentication providers. These are all big software companies with whole divisions that are in charge of authentication and responding to vulnerabilities, so we can be assured that our users are secure.
 
-With NextAuth.js, we can simply define the authentication providers within `NextAuthOptions` object which is passed along with the Next.js context object for each call between the server and the client.
+With NextAuth.js, we can simply define the authentication providers within the `NextAuthOptions` object which is passed along with the Next.js context object for each call between the server and the client.
 ```
 providers: [
     DiscordProvider({
@@ -300,7 +320,7 @@ interface Session extends DefaultSession {
     } & DefaultSession["user"];
   }
 ```
-This means that on the client side, when we can run `useSession()` to get user roles and quotas and respond accordingly:
+This means that on the client side, we can call `useSession()` to get user roles and quotas and respond accordingly:
 ```
 const { data: session } = useSession();
 
@@ -312,4 +332,124 @@ const handleSearch = async () => {
     }
 }
 ```
-NextAuth provides AI-Daleel with top-of-the-line security, maintainability, and scalability when it comes to authentication, and it prevents us from having to roll our own authentication. It lets us worry less about security implementations and focus more on coding the core application. 
+NextAuth.js provides AI-Daleel with top-of-the-line security, maintainability, and flexibility when it comes to authentication and authorization. I am of the opinion that third-party identity-as-a-service (IDaaS) or authentication-as-a-service (AaaS) platforms like [Supabase Auth](https://supabase.com/docs/guides/auth) and [Clerk](https://clerk.com/), which store user data on behalf of you, are not suitable for AI-Daleel. This is because AI-Daleel needs to handle quota logic as a means of authorization for most user actions. Therefore, it requires all the user data to be localized and tightly coupled with the rest of the application data in our own database for better performance. NextAuth.js avoids this by merely acting as an interface to various authentication providers while keeping user data in the application database.
+#### OpenAI API
+The brains of AI-Daleel is the GPT model developed by OpenAI. Specifically, it's the `gpt-3.5-turbo-0301` model published in March. At the time of development, it was the most performant model while also being the most economical at only 1/10th of the price of `text-davinci-003`, which is another model with similar performance.
+
+GPT-3.5 is also not fine-tunable, but this is fine as for our use case, as a little prompt engineering can already yield good results. In the context of GPT, [fine-tuning](https://platform.openai.com/docs/guides/fine-tuning/prepare-training-data) simply means providing a pair of prompt and expected response to the model:
+```
+{"prompt": "<prompt text>", "completion": "<ideal response text>"}
+{"prompt": "<prompt text>", "completion": "<ideal response text>"}
+{"prompt": "<prompt text>", "completion": "<ideal response text>"}
+...
+```
+*Providing hundreds of thousands of entries like this will result in a more specialized (fine-tuned) model.*
+
+In AI-Daleel, we simply provide instructions to the model using the [official Node.js library from OpenAI](https://www.npmjs.com/package/openai). Then, we simply invoke something like the following in our corresponding tRPC protected procedures:
+```
+//Import from the library
+const { Configuration, OpenAIApi } = require("openai");
+
+//Pass secret key into the configuration object
+const configuration = new Configuration({
+    apiKey: env.OPENAI_SECRET_KEY,
+})
+
+//Instantiate a new OpenAIAPI object and pass in the configs
+const openai = new OpenAIApi(configuration);
+
+//Craft your prompt
+const prompt = "Insert your prompt here. Prompt engineering is needed to reliably instruct the model."
+
+//Make the inference call
+const openAiRes = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo-0301",
+    messages: [{"role": "user", "content": prompt}]
+})
+```
+AI-Daleel requests the OpenAI API to [return the results in a JSON format](https://www.shumayl.com/post/approaching-truth-with-gpt). Therefore, it is important to do some server-side processing to ensure that no broken response is sent to the client, and if any unexpected response is received, the right toasts will need to be risen on the client side. This way, the app will be secure from LLM-specific vulnerabilities such as [prompt injection](https://simonwillison.net/2022/Sep/12/prompt-injection/).
+```
+try {
+    console.log("DATA: ", data);
+    const respObj = JSON.parse(data.replace(/[\n\r]/g, '') as string);
+
+    if (JSON.stringify(respObj) === JSON.stringify(defaultRes)) {
+        res = { result: "INVALID_PROMPT", message: "Prompt input invalid. Please retry with a different prompt." }
+    } else if (respObj.length > 3) {
+        res = { result: "LENGTH_MOD_PROMPT_INJECTION", message: "Prompt input invalid. Don't inject my prompt bro." }
+    } else {
+        res = { result: "SEARCH_SUCCESS", message: `AI Search successful. You have ${quotas.searchQuota-1} AI Search quota remaining.`,  respObj: respObj }
+    }
+}
+catch (e) {
+    console.log(e)
+    res = { result: "BROKEN_RESPONSE_ARRAY", message: "Prompt input invalid - broken response array. Please retry with a different prompt." }
+}
+```
+*Parsing the response on the server.*
+
+### 2. Database
+AI-Daleel needs a database to store the application data, Quranic verses, and user accounts. The project requires a performant, scalable, and most importantly, cost-effective database solution.
+
+We turned towards Supabase for its generous free-tier PostgreSQL database hosting. It provides 512MB of free database space, and up to 2GB of [data egress](https://www.digitalguardian.com/blog/what-data-egress-managing-data-egress-prevent-sensitive-data-loss#:~:text=Data%20egress%20refers%20to%20data%20leaving%20a%20network,when%20sensitive%20data%20is%20egressed%20to%20unauthorized%20recipients.).
+
+On top of that, it provides [connection pooling capability](https://supabase.com/docs/guides/database/connecting-to-postgres) with PgBouncer. Connection pooling is a way to manage a large number of temporary connections made by end users. Conventionally, when a client wants to perform a database transaction, it would need to open a connection to the database, perform the transaction, commit the transaction, and close the connection. There is a lot of overhead compute and network costs involved with opening and closing a connection to the database, and this is compounded for each additional user.
+
+Connection pooling solves this by having a cached collection of open database connections that can be borrowed on-demand and returned to the pool for reuse by another client. This avoids having to open and close the connection for each individual transaction, which is are expensive operations.
+
+![Connection pooling with PgBouncer.](/images/connection-pool.jpg)
+*Connection pooling with PgBouncer.*
+
+Supabase, being an open-source project, has a lot of community support. This includes a [Python client library](https://supabase.com/docs/reference/python/introduction) that we can use to create Python scripts to run maintenance transactions on the PostgreSQL database.
+
+AI-Daleel makes use of two separate PostgreSQL databases hosted on Supabase — one development database and one production database. Dealing with PostgreSQL means that whenever we need to migrate data from the production environment into the development environment, we can use tools like `pg_dump` and `psql` that are shipped along with the standard PostgreSQL distribution:
+1. `pg_dump -h {host_name} -U {db_user_name} > {file_name}.sql` to dump the data from the hosted database into a local `.sql` file.
+2. `psql -h {host_name} -U {db_user_name} < {file_name}.sql` to insert the data from the local `.sql` file into the destination database.
+
+### 3. Serverless function
+Users of AI-Daleel have a limited quota for actions like verse search and notes generation. Upon the depletion of the quota, users will have to wait until the quota gets replenished. This is done on a daily basis. Therefore, we need a way to run database transactions to update user quotas at a specified time every day. 
+
+For AI-Daleel, we are using [AWS Lambda](https://aws.amazon.com/lambda/) for this daily operation. It is a service from Amazon which allows us to run serverless code that can be invoked based on pre-specified triggers or events. Again, this comes at a benefit of cost-efficiency over conventional VM/VPS-based solutions like AWS EC2 that needs to be run every second. In fact, we only need the code to run for a few seconds every single day, and AWS Lambda is the perfect solution for this.
+
+![CloudWatch metrics for AI-Daleel's quota refresh Lambda.](/images/lambda-metrics.jpg)
+*CloudWatch metrics for AI-Daleel's quota refresh Lambda.*
+
+We deployed a Python Supabase client function within a Docker container on AWS Lambda. You can find the [repository on my GitHub](https://github.com/mshumayl/supabase-docker-lambda), along with the `Dockerfile` and dependencies in `requirements.txt`. Essentially, the code uses the Python Supabase client library, and performs the update operation in just 22 lines of code (including imports):
+```
+from supabase import create_client, Client
+import os
+from dotenv import load_dotenv
+from datetime import datetime
+import json
+
+def handler(event, context):
+    load_dotenv()
+
+    url: str = os.getenv("SUPABASE_URL")
+    key: str = os.getenv("SUPABASE_KEY")
+
+    time: str = str(datetime.utcnow())
+
+    supabase: Client = create_client(url, key)
+    
+    res = supabase.table("User").update({
+        "searchQuota": 5,
+        "quotaRefreshTs": time
+        }).eq("role", "FREEUSER").execute()
+    
+    //For monitoring purposes in AWS Lambda console
+    return json.dumps(res, default=str)
+```
+
+The whole repository is Dockerized and container image is published on [Amazon Elastic Container Registry (ECR)](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html). From there, we can create a new Lambda by supplying the URI of the container image in the Lambda console.
+
+In order to trigger this Lambda, we use [Amazon EventBridge Scheduler](https://ap-southeast-1.console.aws.amazon.com/scheduler/home?region=ap-southeast-1#schedules), which allows us to effectively set a cron-based schedule to run the Lambda once every single day.
+
+The combination of AWS Lambda and Amazon EventBridge is a great and cost-effective solution if you need to run code or worker services on a scheduled basis, and for AI-Daleel we have paid a grand total of $0 since the deployment of the application, since the first 1 million invocations of each month are free. As we only need to run this code 31 times at max per month, we are well within this quota.
+
+## Conclusion
+This has been a very technical an in-depth post about the system architecture of AI-Daleel. Laying it down in words helped me better retain my experiences and learnings that I have obtained throughout the development of this project.
+
+In a [blog post from Simon Willison](https://simonwillison.net/2022/Nov/6/what-to-blog-about/), he proposed the definition of being "done" for anything we build is after we "write about it". While I am nowhere near being "done" for AI-Daleel, I hope this blog post has served as a good write-up of my experiences and technical considerations in building this project.
+
+Thank you for reading!

@@ -1,10 +1,11 @@
 ---
-title: 'Contributing Code to OSS'
+title: 'Contributing Code to Open Source'
 image: '/images/my-life-through-a-lens-bq31L0jQAjU-unsplash.jpg'
 excerpt: 'Crafting the perfect PR.'
 date: '2022-01-17'
 tags: 
     - 'open-source'
+    - 'tutorial'
 ---
 Contributing to open-source software projects can be intimidating, with all the different standards and requirements between different codebases. Some projects have their own [contribution guidelines](https://github.com/einsteinpy/einsteinpy/blob/main/CONTRIBUTING.rst) you can refer to.  
 

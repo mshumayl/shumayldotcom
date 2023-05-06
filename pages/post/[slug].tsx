@@ -44,10 +44,11 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
                 <div className="font-grotesk text-sm tracking-wider text-gray-50">{date}</div>
                 <div className="font-grotesk text-gray-300 [&>p>a]:text-gray-100 leading-loose
                  [&>ul>li>a]:text-gray-100 [&>h2]:text-gray-100 [&>h3]:text-gray-200 [&>h4]:text-gray-200 
-                 [&>p>code]:text-gray-100 [&>p>code]:bg-gray-700 
+                 [&>p>code]:text-gray-100 [&>p>code]:bg-gray-700 [&>p>code]:rounded-md [&>p>code]:p-0.5 [&>p>code]:m-0.5 [&>p>code]:text-xs
                  [&>p>em]:flex [&>p>em]:justify-center [&>p>em]:text-gray-400 [&>p>em]:text-sm 
                  [&>p>img]:flex [&>p>img]:mx-auto [&>p>img]:border-2 [&>p>img]:border-gray-700 [&>p>img]:rounded-xl
                  [&>pre]:m-auto [&>pre]:border-2 [&>pre]:border-gray-700 
+                 [&>ol>li>code]:text-gray-100 [&>ol>li>code]:bg-gray-700 [&>ol>li>code]:rounded-md [&>ol>li>code]:p-0.5 [&>ol>li>code]:m-0.5 [&>ol>li>code]:text-xs
                  " dangerouslySetInnerHTML={{ __html: md().render(content) }}/>
                 <div>
                     <ReturnHomeButton/>
