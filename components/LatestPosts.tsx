@@ -11,7 +11,7 @@ interface LatestPostsProps {
 
 function filterPostsByTags(posts: LatestPostsProps[], selectedTags = "") {
     // console.log(selectedTags)
-    return posts.filter((p) => p.frontmatter.tags[0].toLowerCase().toString() == selectedTags); //modify indexing here to accept more than 1 tag
+    return posts.filter((p) => p.frontmatter.tags.includes(selectedTags)); //modify indexing here to accept more than 1 tag
 }
 
 
@@ -38,10 +38,15 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
     const isEmptyString = (data: string): boolean => typeof data === "string" && data.trim().length == 0;
     const latestPostSectionTitle = "Latest Posts";
 
-    const tags = posts.map(({frontmatter}) => (frontmatter.tags.toString()))
-    const allTag = "all";
-    tags.unshift(allTag);
-    const uniqueTags = [...new Set(tags)];
+    const tags = posts.map(({frontmatter}) => {
+        const tagsArr = [...frontmatter.tags]
+        return tagsArr
+    })
+    
+    const flatTags = tags.flat()
+
+    flatTags.unshift("all");
+    const uniqueTags = [...new Set(flatTags)];
 
     filteredPosts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
 

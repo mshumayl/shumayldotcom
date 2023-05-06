@@ -5,6 +5,7 @@ excerpt: 'Harnessing the power of Large Language Models.'
 date: '2022-01-16'
 tags: 
     - 'machine-learning'
+    - 'experiment'
 ---
 Note: This project is open-sourced on my [GitHub](https://github.com/mshumayl/gpt-to-csv). 
 
