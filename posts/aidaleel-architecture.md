@@ -1,16 +1,16 @@
 ---
 title: 'Behind the Scenes of an AI App'
-image: '/images/markus-winkler-yYpmCA32U_M-unsplash.jpg'
+image: '/images/full-arch.jpg'
 excerpt: 'A deep dive into the AI-Daleel system architecture.'
 date: '2023-04-30'
 tags: 
-    - 'machine-learning'
-    - 'web-dev'
     - 'systems'
+    - 'web-dev'
+    - 'machine-learning'
 ---
 
 
-![AI-Daleel system architecture.](/images/system_architecture.png)
+![AI-Daleel system architecture.](/images/full-arch.jpg)
 *AI-Daleel system architecture.*
 
 ## AI-Daleel
@@ -34,18 +34,21 @@ There are 3 core components that make up AI-Daleel:
 3. Serverless function — This is how the quota refresh is implemented.
 
 ### 1. Web application
-The web application is a TypeScript app built on the [T3 stack](https://create.t3.gg/). It is deployed on [AWS Amplify Hosting](https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html), a cloud platform for hosting full-stack serverless web applications with CI/CD capabilities. It allows you to deploy your code simply by pushing to your GitHub repository. You can even enable preview deployments by connecting your feature branch to AWS Amplify. The build settings for deployments can be set using a config `amplify.yml` file, where you can define the pre-build and build commands, the base build directory, and environment variables. It is also integrated with [Amazon CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html), where you can monitor the request logs for your application and perform traffic analytics.
+![AI-Daleel web app stack.](/images/webapp.jpg)
+*AI-Daleel web app stack.*
 
-For now, a serverless platform like AWS Amplify is the most economical option for deploying AI-Daleel as compared to VPS/VM solutions like AWS EC2. On AWS Amplify, we are only billed for requests made to the application endpoints and the duration of build. On the other hand, if we were to deploy it into an EC2 instance, we will be billed for every second the server is running, regardless of the amount of traffic the application is receiving.
+The web application is a TypeScript app built on the [T3 stack](https://create.t3.gg/). It is deployed on [AWS Amplify Hosting](https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html), a cloud platform for hosting full-stack serverless web applications which comes with the whole continuous deployment (CD) shebang. It allows you to deploy your code simply by pushing to your GitHub repository. You can even enable preview deployments by connecting your feature branch to AWS Amplify. The build settings for deployments can be set using a config `amplify.yml` file, where you can define the pre-build and build commands, the base build directory, and your environment variables. As with most AWS products, it is also integrated with [Amazon CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html), where you can monitor the request logs for your application and perform traffic analytics.
+
+For now, a serverless platform like AWS Amplify is the most economical option for deploying AI-Daleel as opposed to VPS/VM solutions like AWS EC2. On AWS Amplify, we are only billed for requests made to the application endpoints and the duration of build. On the other hand, if we were to deploy it into an EC2 instance, we will be billed for every second the server is running, regardless of the amount of traffic the application is receiving — and AI-Daleel is no Facebook.
 
 ![AWS Amplify deployment console.](/images/amplify-deployment.jpg)
 *AWS Amplify deployment console.*
 
-Naturally, being a Next.js project, it was initially published on Vercel. However, on the eve of Eid, hours before release, the authentication procedure keeps on failing, preventing users from logging into the app. After troubleshooting, it was found that the root cause for this failure is that the Serverless Function responsible for handling the authentication procedure with third-party auth providers keeps timing out, and there is no way to increase the timeout duration on Vercel.
+Naturally, being a Next.js project, it was initially deployed on [Vercel](https://vercel.com/docs) — the company that created Next.js. However, on the eve of Eid, hours before release, the authentication procedure keeps on failing, preventing users from logging into the app. After troubleshooting well into the wee hours of Eid, it was found that the root cause for this failure is that the Serverless Function responsible for handling the authentication procedure with third-party auth providers keeps timing out, and there is no way to increase the timeout duration on Vercel.
 
 After yeeting the code from Vercel and deploying it on AWS Amplify, with no change to the code at all, not only is it able to run the authentication procedure successfully, but all server-side fetches obtained a remarkable speed up over the Vercel deployment. This instantly turned me into an Amplify fanboy.
 
-The web application code itself consists of the following components:
+The web application code mentioned consists of the following components:
 - Next.js
 - tRPC
 - Prisma
@@ -53,8 +56,10 @@ The web application code itself consists of the following components:
 - NextAuth.js
 - OpenAI API
 
+Let's dive into each of these technologies.
+
 #### Next.js
-Next.js is an open-source full-stack React framework that allows us to run both front-end and back-end code in a single repository. It comes with all the usual React goodness, such as client states handling, re-rendering, and componentization. Additionally, Next.js offers support for pre-rendering HTML documents on the server via Static Site Generation (SSG) and Server-Side Rendering, which can be configured independently for each page in the `/pages` directory. Next.js automatically defines a route for every file in this directory, as it uses folder-based routing instead of controller-attached route definitions found in MVC-based frameworks.
+First off, Next.js is an open-source full-stack React framework that allows us to run both front-end and back-end code in a single repository. It comes with all the usual React goodness, such as client states handling, re-rendering, and componentization. Additionally, Next.js offers support for pre-rendering HTML documents on the server via Static Site Generation (SSG) and Server-Side Rendering (SSR), which can be configured independently for each page in the `/pages` directory. Next.js automatically defines a route for every file in this directory, as it uses folder-based routing instead of controller-based route definitions found in MVC frameworks.
 
 SSG generates pages on the server at build time (during deployment) and serves them as static HTML documents. This means that when a user visits a page, they receive a pre-rendered HTML document (although data fetching and reactive client re-renders can still be done thereafter). For static pages, this approach can significantly improve the time-to-first-byte (TTFB) and enhance SEO by providing fully-rendered HTML documents that search engine crawlers love. Next.js defaults to SSG for all pages, but you can implement SSG explicitly by defining rendering procedures, server-side fetches, and props in the `getStaticProps` function at the top of each page file. For dynamic routes, `getStaticPaths` is also required to let Next.js know what data to fetch based on all the possible routes.
 
@@ -87,7 +92,7 @@ As you see in the above code block, we can protect the whole page from being acc
 
 The rendering approach you choose with Next.js will depend on your application's specific requirements. A good mental model is to think about when do you need the data to be made available on the client-side. Then, you should also think about if the data is unique for each session or whether it is a static data that can be fetched once during build time. Ultimately, you should think about the trade-offs you are willing to make between performance, availability, and complexity.
 #### tRPC
-Conventionally, API endpoints are interfaced between the server and the client via RESTful JSON. There is no way to ensure type-safety with REST, as it is essentially a string of JSON that you will have to parse on the client-side, which historically has been a huge source of headache for developers worldwide. tRPC fixes this. 
+Conventionally, API endpoints are communicated between the server and the client via RESTful JSON (or even XML). There is no way to ensure type-safety with REST, as it is essentially a string of JSON that you will have to parse on the client-side, which historically has been a huge source of headache for developers worldwide. tRPC fixes this.
 
 tRPC is an open-source remote procedure call (RPC) framework designed for TypeScript. It allows for type-safe communication between front-end and back-end code using GraphQL-esque APIs without any code generation.
 
@@ -127,9 +132,9 @@ const handleUserClick = async () => {
 
 In AI-Daleel, all database CRUD operations and OpenAI inference calls are implemented as tRPC procedures that are protected by middleware session authentication via `protectedProcedure`. This means that only requests from authenticated users with valid sessions are allowed, minimizing the risk of potential DDOS attacks. This security measure is crucial for preventing malicious attacks that could potentially bring down the site and result in significant financial losses.
 #### Prisma
-In modern web development, you do not want to write native SQL queries whenever the client needs data. For one, there are many database-specific flavours of SQL, and hard-coding SQL queries are an easy way to give future you more work when you decide to migrate to a different database. On top of that, it is easy to get things wrong and introduce severe security risks like SQL injection. SQL queries are also not strictly typed by nature, which goes against modern type-safety standards. The solution to all of this is the usage of ORMs.
+In modern web development, you do not want to write native SQL queries whenever the client needs data. For one, there are many database-specific flavours of SQL, and hard-coding SQL queries is an easy way to give future you more work when you decide to migrate to a different database. On top of that, it is easy to get things wrong and introduce severe security risks like SQL injection. SQL queries are also not strictly typed by nature, which goes against modern type-safety standards. The solution to all of this is the usage of ORMs.
 
-Prisma is an open-source type-safe object-relational mapping (ORM) framework that is used to communicate with the database. Prisma Client performs database operations with TypeScript methods in place of native SQL queries. This comes with the benefit of type-safety, ensuring that the server-side query matches the data models and types in `schema.prisma`. For example, this is how the schema for two of the tables in AI-Daleel is defined:
+Prisma is an open-source type-safe object-relational mapping (ORM) framework. Prisma Client performs database operations with TypeScript methods in place of native SQL queries. This comes with the benefit of type-safety, ensuring that the server-side query matches the data models and types in `schema.prisma`. For example, this is how the schema for two of the tables in AI-Daleel is defined:
 
 ```
 model Verses {
@@ -336,7 +341,7 @@ NextAuth.js provides AI-Daleel with top-of-the-line security, maintainability, a
 #### OpenAI API
 The brains of AI-Daleel is the GPT model developed by OpenAI. Specifically, it's the `gpt-3.5-turbo-0301` model published in March. At the time of development, it was the most performant model while also being the most economical at only 1/10th of the price of `text-davinci-003`, which is another model with similar performance.
 
-GPT-3.5 is also not fine-tunable, but this is fine as for our use case, as a little prompt engineering can already yield good results. In the context of GPT, [fine-tuning](https://platform.openai.com/docs/guides/fine-tuning/prepare-training-data) simply means providing a pair of prompt and expected response to the model:
+GPT-3.5 is also not fine-tunable, but this is fine as for our use case, as a little prompt engineering can already yield great results. In the context of GPT, [fine-tuning](https://platform.openai.com/docs/guides/fine-tuning/prepare-training-data) simply means providing a pair of prompt and expected response to the model:
 ```
 {"prompt": "<prompt text>", "completion": "<ideal response text>"}
 {"prompt": "<prompt text>", "completion": "<ideal response text>"}
@@ -389,6 +394,9 @@ catch (e) {
 *Parsing the response on the server.*
 
 ### 2. Database
+![AI-Daleel database stack.](/images/database.jpg)
+*AI-Daleel database stack.*
+
 AI-Daleel needs a database to store the application data, Quranic verses, and user accounts. The project requires a performant, scalable, and most importantly, cost-effective database solution.
 
 We turned towards Supabase for its generous free-tier PostgreSQL database hosting. It provides 512MB of free database space, and up to 2GB of [data egress](https://www.digitalguardian.com/blog/what-data-egress-managing-data-egress-prevent-sensitive-data-loss#:~:text=Data%20egress%20refers%20to%20data%20leaving%20a%20network,when%20sensitive%20data%20is%20egressed%20to%20unauthorized%20recipients.).
@@ -407,6 +415,9 @@ AI-Daleel makes use of two separate PostgreSQL databases hosted on Supabase — 
 2. `psql -h {host_name} -U {db_user_name} < {file_name}.sql` to insert the data from the local `.sql` file into the destination database.
 
 ### 3. Serverless function
+![AI-Daleel Lambda function.](/images/lambda.jpg)
+*AI-Daleel Lambda function.*
+
 Users of AI-Daleel have a limited quota for actions like verse search and notes generation. Upon the depletion of the quota, users will have to wait until the quota gets replenished. This is done on a daily basis. Therefore, we need a way to run database transactions to update user quotas at a specified time every day. 
 
 For AI-Daleel, we are using [AWS Lambda](https://aws.amazon.com/lambda/) for this daily operation. It is a service from Amazon which allows us to run serverless code that can be invoked based on pre-specified triggers or events. Again, this comes at a benefit of cost-efficiency over conventional VM/VPS-based solutions like AWS EC2 that needs to be run every second. In fact, we only need the code to run for a few seconds every single day, and AWS Lambda is the perfect solution for this.
@@ -441,7 +452,7 @@ def handler(event, context):
     return json.dumps(res, default=str)
 ```
 
-The whole repository is Dockerized and container image is published on [Amazon Elastic Container Registry (ECR)](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html). From there, we can create a new Lambda by supplying the URI of the container image in the Lambda console.
+The repository is Dockerized and the container image is published on [Amazon Elastic Container Registry (ECR)](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html). From there, we can create a new Lambda by supplying the URI of our container image in the Lambda console.
 
 In order to trigger this Lambda, we use [Amazon EventBridge Scheduler](https://ap-southeast-1.console.aws.amazon.com/scheduler/home?region=ap-southeast-1#schedules), which allows us to effectively set a cron-based schedule to run the Lambda once every single day.
 
