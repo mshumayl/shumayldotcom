@@ -1,6 +1,5 @@
 import { promises as fs } from 'fs';
 import matter from 'gray-matter';
-import md from 'markdown-it';
 import Header from '../../components/Header'
 import PostMetaTags from '../../components/PostMetaTags';
 import ReturnHomeButton from '../../components/ReturnHomeButton';
@@ -9,7 +8,6 @@ import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import remarkSlug from 'remark-slug';
-import remarkToc from 'remark-toc';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { unified } from 'unified';
 import rehypeToc from 'rehype-toc';
