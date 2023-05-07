@@ -12,6 +12,7 @@ import remarkSlug from 'remark-slug';
 import remarkToc from 'remark-toc';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { unified } from 'unified';
+import rehypeToc from 'rehype-toc';
 
 export async function getStaticPaths() {
     const files = await fs.readdir('posts');
@@ -33,10 +34,23 @@ export async function getStaticProps({ params: { slug } }: { params: { slug: str
     const processor = unified()
         .use(remarkParse)
         .use(remarkSlug)
-        .use(remarkToc)
         .use(remarkRehype)
         .use(rehypeAutolinkHeadings)
-        .use(rehypeDocument, {title: 'Contents'})
+        .use(rehypeToc, {
+            customizeTOC: (tocTree) => {
+                const modifyTree = (node: any) => {
+                    if (node.tagName === 'ol') {
+                      node.tagName = 'ul';
+                    }
+                    if (node.children) {
+                      node.children.forEach(modifyTree);
+                    }
+                  };
+                  modifyTree(tocTree);
+                  return tocTree;
+              },
+        })
+        .use(rehypeDocument, {title: slug})
         .use(rehypeStringify);
 
     const htmlContent = await processor.process(content)
@@ -71,6 +85,8 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
                  [&>p>em]:flex [&>p>em]:justify-center [&>p>em]:text-gray-400 [&>p>em]:text-sm 
                  [&>p>img]:flex [&>p>img]:mx-auto [&>p>img]:border-2 [&>p>img]:border-gray-700 [&>p>img]:rounded-xl
                  [&>pre]:m-auto [&>pre]:border-2 [&>pre]:border-gray-700 
+                 [&>nav]:rounded-lg [&>nav]:bg-gray-800 [&>nav]:p-2 [&>nav]:mt-6 [&>nav]:border-2 [&>nav]:border-gray-700
+                 [&>nav]:before:content-['Table_of_Contents']
                  [&>ol>li>code]:text-gray-100 [&>ol>li>code]:bg-gray-700 [&>ol>li>code]:rounded-md [&>ol>li>code]:p-0.5 [&>ol>li>code]:m-0.5 [&>ol>li>code]:text-xs
                  " dangerouslySetInnerHTML={{ __html: content }}/>
                 <div>

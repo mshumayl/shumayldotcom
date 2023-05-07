@@ -18,4 +18,13 @@
     margin-top: 10px;
     margin-right: 4px;
 }
-  
+
+
+.toc-item {
+    margin: 4px;
+}
+
+.toc-link {
+    color: white;
+    text-underline-offset: 4px;
+}

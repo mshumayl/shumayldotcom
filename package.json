@@ -25,6 +25,7 @@
     "rehype-autolink-headings": "^6.1.1",
     "rehype-document": "^6.1.0",
     "rehype-stringify": "^9.0.3",
+    "rehype-toc": "^3.0.2",
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
     "remark-slug": "^7.0.1",
