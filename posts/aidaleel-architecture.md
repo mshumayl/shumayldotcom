@@ -25,7 +25,7 @@ On top of the search feature, AI-Daleel also lets you:
 
 I have learnt a lot throughout the building of this project, and I would like to share it here to better cement the knowledge in my mind.
 
-In this post, we will explore the system architecture of AI-Daleel, with a deep dive on the tech stack and cloud technologies used.
+In this post, we will explore the system architecture of AI-Daleel, with a deep dive on the tech stack and cloud technologies used behind the scenes of AI-Daleel.
 
 ## Core components
 There are 3 core components that make up AI-Daleel:
