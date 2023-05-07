@@ -21,10 +21,15 @@
 
 
 .toc-item {
-    margin: 4px;
+    margin: 0px;
+    padding: 0px;
 }
 
 .toc-link {
-    color: white;
+    color: #d1d5db;
     text-underline-offset: 4px;
+}
+
+.toc-link:hover {
+    color: #9ca3af;
 }
