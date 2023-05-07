@@ -1,9 +1,16 @@
 import { promises as fs } from 'fs';
 import matter from 'gray-matter';
-import md from 'markdown-it';
 import Header from '../../components/Header'
 import PostMetaTags from '../../components/PostMetaTags';
 import ReturnHomeButton from '../../components/ReturnHomeButton';
+import rehypeDocument from 'rehype-document';
+import rehypeStringify from 'rehype-stringify';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import remarkSlug from 'remark-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import { unified } from 'unified';
+import rehypeToc from 'rehype-toc';
 
 export async function getStaticPaths() {
     const files = await fs.readdir('posts');
@@ -22,10 +29,36 @@ export async function getStaticProps({ params: { slug } }: { params: { slug: str
     const file = await fs.readFile(`posts/${slug}.md`);
     const { data: frontmatter, content } = matter(file);
 
+    const processor = unified()
+        .use(remarkParse)
+        .use(remarkSlug)
+        .use(remarkRehype)
+        .use(rehypeAutolinkHeadings)
+        .use(rehypeToc, {
+            customizeTOC: (tocTree) => {
+                const modifyTree = (node: any) => {
+                    if (node.tagName === 'ol') {
+                      node.tagName = 'ul';
+                    }
+                    if (node.children) {
+                      node.children.forEach(modifyTree);
+                    }
+                  };
+                  modifyTree(tocTree);
+                  return tocTree;
+              },
+        })
+        .use(rehypeDocument, {title: slug})
+        .use(rehypeStringify);
+
+    const htmlContent = await processor.process(content)
+
+    const htmlString = htmlContent.toString()
+
     return { 
         props: {
             frontmatter,
-            content,
+            content: htmlString,
             slug
         }
      };
@@ -44,12 +77,16 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
                 <div className="font-grotesk text-sm tracking-wider text-gray-50">{date}</div>
                 <div className="font-grotesk text-gray-300 [&>p>a]:text-gray-100 leading-loose
                  [&>ul>li>a]:text-gray-100 [&>h2]:text-gray-100 [&>h3]:text-gray-200 [&>h4]:text-gray-200 
-                 [&>p>code]:text-gray-100 [&>p>code]:bg-gray-700 [&>p>code]:rounded-md [&>p>code]:p-0.5 [&>p>code]:m-0.5 [&>p>code]:text-xs
+                 [&>p>code]:text-gray-100 [&>p>code]:bg-gray-700 [&>p>code]:rounded-md 
+                 [&>p>code]:p-0.5 [&>p>code]:m-0.5 [&>p>code]:text-xs [&>p>code]:font-cascadia [&>p>code]:tracking-wider
+                 [&>pre>code]:font-cascadia
                  [&>p>em]:flex [&>p>em]:justify-center [&>p>em]:text-gray-400 [&>p>em]:text-sm 
                  [&>p>img]:flex [&>p>img]:mx-auto [&>p>img]:border-2 [&>p>img]:border-gray-700 [&>p>img]:rounded-xl
                  [&>pre]:m-auto [&>pre]:border-2 [&>pre]:border-gray-700 
+                 [&>nav]:rounded-lg [&>nav]:bg-gray-800 [&>nav]:p-2 [&>nav]:mt-6 [&>nav]:border-2 [&>nav]:border-gray-700
+                 [&>nav]:before:content-['Table_of_Contents']
                  [&>ol>li>code]:text-gray-100 [&>ol>li>code]:bg-gray-700 [&>ol>li>code]:rounded-md [&>ol>li>code]:p-0.5 [&>ol>li>code]:m-0.5 [&>ol>li>code]:text-xs
-                 " dangerouslySetInnerHTML={{ __html: md().render(content) }}/>
+                 " dangerouslySetInnerHTML={{ __html: content }}/>
                 <div>
                     <ReturnHomeButton/>
                 </div>

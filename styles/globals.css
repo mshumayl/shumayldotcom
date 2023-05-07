@@ -2,3 +2,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "cascadia";
+    src: url("/fonts/CascadiaCode-Regular.ttf");
+}
+
+.icon-link {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-image: url(/link.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: 10px;
+    margin-right: 4px;
+}
+
+
+.toc-item {
+    margin: 0px;
+    padding: 0px;
+}
+
+.toc-link {
+    color: #d1d5db;
+    text-underline-offset: 4px;
+}
+
+.toc-link:hover {
+    color: #9ca3af;
+}

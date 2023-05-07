@@ -13,7 +13,7 @@ tags:
 ![AI-Daleel system architecture.](/images/full-arch.jpg)
 *AI-Daleel system architecture.*
 
-## AI-Daleel
+## About AI-Daleel
 Recently, I published [AI-Daleel](https://www.ai-daleel.com/), a personal side project I have been working on in my free time in Ramadan. It's a tool that lets you search for Quranic verses with natural language search terms and rough transliterations. 
 
 It addresses a personal pain point of mine when it comes to Googling for Quranic verses. It's unreliable, messy, and slow. AI-Daleel aims to solve this.
@@ -25,7 +25,7 @@ On top of the search feature, AI-Daleel also lets you:
 
 I have learnt a lot throughout the building of this project, and I would like to share it here to better cement the knowledge in my mind.
 
-In this post, we will explore the system architecture of AI-Daleel, with a deep dive on the tech stack and cloud technologies used.
+In this post, we will explore the system architecture of AI-Daleel, with a deep dive on the tech stack and cloud technologies used behind the scenes of AI-Daleel.
 
 ## Core components
 There are 3 core components that make up AI-Daleel:
@@ -33,7 +33,7 @@ There are 3 core components that make up AI-Daleel:
 2. Database — This is where the data is stored.
 3. Serverless function — This is how the quota refresh is implemented.
 
-### 1. Web application
+### Web application
 ![AI-Daleel web app stack.](/images/webapp.jpg)
 *AI-Daleel web app stack.*
 
@@ -108,7 +108,7 @@ tRPC is built around react-query, preserving core functionalities such as `useQu
 export const myRouter = createTRPCRouter({
     //protectedProcedure only runs if there is a valid session in ctx.
     myProcedure: protectedProcedure
-    .input(z.object( { verseId: z.string(), userId: z.string() } ))
+    .input(z.object({ verseId: z.string(), userId: z.string() }))
     .mutation(async ({ ctx, input }) => {
 
         let res: RespT; //Consistent base type
@@ -393,7 +393,7 @@ catch (e) {
 ```
 *Parsing the response on the server.*
 
-### 2. Database
+### Database
 ![AI-Daleel database stack.](/images/database.jpg)
 *AI-Daleel database stack.*
 
@@ -414,7 +414,7 @@ AI-Daleel makes use of two separate PostgreSQL databases hosted on Supabase — 
 1. `pg_dump -h {host_name} -U {db_user_name} > {file_name}.sql` to dump the data from the hosted database into a local `.sql` file.
 2. `psql -h {host_name} -U {db_user_name} < {file_name}.sql` to insert the data from the local `.sql` file into the destination database.
 
-### 3. Serverless function
+### Serverless function
 ![AI-Daleel Lambda function.](/images/lambda.jpg)
 *AI-Daleel Lambda function.*
 
@@ -459,7 +459,7 @@ In order to trigger this Lambda, we use [Amazon EventBridge Scheduler](https://a
 The combination of AWS Lambda and Amazon EventBridge is a great and cost-effective solution if you need to run code or worker services on a scheduled basis, and for AI-Daleel we have paid a grand total of $0 since the deployment of the application, since the first 1 million invocations of each month are free. As we only need to run this code 31 times at max per month, we are well within this quota.
 
 ## Conclusion
-This has been a very technical an in-depth post about the system architecture of AI-Daleel. Laying it down in words helped me better retain my experiences and learnings that I have obtained throughout the development of this project.
+This has been a very technical in-depth post about the system architecture of AI-Daleel. Laying it down in words helped me better retain my experiences and learnings that I have obtained throughout the development of this project.
 
 In a [blog post from Simon Willison](https://simonwillison.net/2022/Nov/6/what-to-blog-about/), he proposed the definition of being "done" for anything we build is after we "write about it". While I am nowhere near being "done" for AI-Daleel, I hope this blog post has served as a good write-up of my experiences and technical considerations in building this project.
 
