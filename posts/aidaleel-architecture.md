@@ -108,7 +108,7 @@ tRPC is built around react-query, preserving core functionalities such as `useQu
 export const myRouter = createTRPCRouter({
     //protectedProcedure only runs if there is a valid session in ctx.
     myProcedure: protectedProcedure
-    .input(z.object( { verseId: z.string(), userId: z.string() } ))
+    .input(z.object({ verseId: z.string(), userId: z.string() }))
     .mutation(async ({ ctx, input }) => {
 
         let res: RespT; //Consistent base type

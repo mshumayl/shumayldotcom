@@ -35,8 +35,8 @@ export async function getStaticProps({ params: { slug } }: { params: { slug: str
         .use(remarkSlug)
         .use(remarkToc)
         .use(remarkRehype)
-        .use(rehypeDocument, {title: 'Contents'})
         .use(rehypeAutolinkHeadings)
+        .use(rehypeDocument, {title: 'Contents'})
         .use(rehypeStringify);
 
     const htmlContent = await processor.process(content)
@@ -65,7 +65,9 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
                 <div className="font-grotesk text-sm tracking-wider text-gray-50">{date}</div>
                 <div className="font-grotesk text-gray-300 [&>p>a]:text-gray-100 leading-loose
                  [&>ul>li>a]:text-gray-100 [&>h2]:text-gray-100 [&>h3]:text-gray-200 [&>h4]:text-gray-200 
-                 [&>p>code]:text-gray-100 [&>p>code]:bg-gray-700 [&>p>code]:rounded-md [&>p>code]:p-0.5 [&>p>code]:m-0.5 [&>p>code]:text-xs
+                 [&>p>code]:text-gray-100 [&>p>code]:bg-gray-700 [&>p>code]:rounded-md 
+                 [&>p>code]:p-0.5 [&>p>code]:m-0.5 [&>p>code]:text-xs [&>p>code]:font-cascadia [&>p>code]:tracking-wider
+                 [&>pre>code]:font-cascadia
                  [&>p>em]:flex [&>p>em]:justify-center [&>p>em]:text-gray-400 [&>p>em]:text-sm 
                  [&>p>img]:flex [&>p>img]:mx-auto [&>p>img]:border-2 [&>p>img]:border-gray-700 [&>p>img]:rounded-xl
                  [&>pre]:m-auto [&>pre]:border-2 [&>pre]:border-gray-700 

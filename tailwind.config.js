@@ -7,7 +7,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'grotesk': ['Space Grotesk', 'sans-serif']
+        'grotesk': ['Space Grotesk', 'sans-serif'],
+        'cascadia': ['cascadia', 'mono']
       },
     },
   },
