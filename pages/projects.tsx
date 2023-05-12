@@ -2,6 +2,7 @@ import Header from '../components/Header';
 import Image from 'next/image';
 import IndexMetaTags from '../components/IndexMetaTags';
 import Link from 'next/link';
+import React from 'react';
 
 interface Project {
   title: string;

@@ -44,7 +44,7 @@ For now, a serverless platform like AWS Amplify is the most economical option fo
 ![AWS Amplify deployment console.](/images/amplify-deployment.jpg)
 *AWS Amplify deployment console.*
 
-Naturally, being a Next.js project, it was initially deployed on [Vercel](https://vercel.com/docs) — the company that created Next.js. However, on the eve of Eid, hours before release, the authentication procedure keeps on failing, preventing users from logging into the app. After troubleshooting well into the wee hours of Eid, it was found that the root cause for this failure is that the Serverless Function responsible for handling the authentication procedure with third-party auth providers keeps timing out, and there is no way to increase the timeout duration on Vercel.
+Naturally, being a Next.js project, it was initially deployed on [Vercel](https://vercel.com/docs) — the company that created Next.js. However, on the eve of Eid, hours before release, the authentication procedure keeps on failing, preventing users from logging into the app. After troubleshooting well into the wee hours of Eid, it was found that the root cause for this failure is that the Serverless Function responsible for handling the authentication procedure with third-party auth providers keeps timing out due to extended cold starts, and there is no way to increase the timeout duration on Vercel.
 
 After yeeting the code from Vercel and deploying it on AWS Amplify, with no change to the code at all, not only is it able to run the authentication procedure successfully, but all server-side fetches obtained a remarkable speed up over the Vercel deployment. This instantly turned me into an Amplify fanboy.
 
