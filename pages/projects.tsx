@@ -36,7 +36,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
         <div className="my-20">
             <div className="mx-3">
                 <div className="font-grotesk text-3xl font-extralight tracking-widest">Public Projects</div>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 my-10 gap-8">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 my-10 gap-8">
                     <a className="flex flex-col border border-gray-700  rounded-3xl text-slate-300">
                         <li className="flex flex-col  p-4 h-full w-full">
                             <div className="font-grotesk text-md shrink-0 w-full h-56 relative rounded-xl overflow-hidden mb-4">
