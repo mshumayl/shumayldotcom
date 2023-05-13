@@ -30,9 +30,9 @@ You might have used Bing's latest AI-infused search feature. We can see that it 
 ![Bing's AI search.](/images/bing-ai.jpg)
 *Bing's AI search.*
 
-Bing relies on a method they coin as "[grounding](https://www.searchenginejournal.com/how-bing-ai-search-uses-web-content/480643/)". Without oversimplifying things too much, what happens is that they provide more context within their prompting by injecting unstructured texts from relevant search results (web pages). This is determined by Edge's conventional search engine ranking method. This way, it is able to keep track of the source document of the injected texts. 
+Bing relies on a method they coin as "[grounding](https://www.searchenginejournal.com/how-bing-ai-search-uses-web-content/480643/)". A general form of this method is also known as retrieval-augmented few-shot prompting. Without oversimplifying things too much, what happens is that they provide more context within their prompting by injecting unstructured texts from relevant search results (web pages). This is the retrieval component of the system, powered by Edge's search engine (or a variant of it). This way, it is able to keep track of the source document of the injected texts. 
 
-This means that the references provided by Bing are references from the additional context texts provided in the prompts, not the actual source of words in the initial training corpus. A distinction between additional context source and training corpus source needs to be considered very clearly here.
+This means that the references provided by Bing are from the additional context texts in the prompts, not the initial training corpus. It is important to distinguish between these two sources, and the reason for our avoiding this is explained in the following section.
 
 ## How does AI-Daleel approach text synthesis?
 Currently, there are two tasks that rely on GPT text synthesis in AI-Daleel. Namely, this is the AI Search feature and the AI Generate Notes feature.
@@ -75,7 +75,7 @@ Without further context documents, the current drawback is that the summaries wi
 For the reasons mentioned above, we have made a conscious decision to avoid using any external references as context.
 
 ## UI/UX considerations
-It is important to let the users realize that any AI-generated text cannot be trusted as authoritative in any way. The AI Generate Note is a feature that generates notes on behalf of the user. To get this idea across, after the generation, the user can add and edit the generated text as they see fit before confirming the addition of the note.
+It is important to let the users realize that any AI-generated text cannot be trusted as authoritative in any way. The AI Generate Note is a feature that generates notes on behalf of the user. To get this idea across, the translation summarization is generated in the user's input box, where the user can add and edit the generated text as they see fit before confirming the addition of the note.
 
 ![AI-Daleel's AI Note Generation feature.](/images/aai-daleel-notes-generation.jpg)
 *AI-Daleel's AI Note Generation feature.*
