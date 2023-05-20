@@ -30,9 +30,9 @@ You might have used Bing's latest AI-infused search feature. We can see that it 
 ![Bing's AI search.](/images/bing-ai.jpg)
 *Bing's AI search.*
 
-Bing relies on a method they coin as "[grounding](https://www.searchenginejournal.com/how-bing-ai-search-uses-web-content/480643/)". A general form of this method is also known as retrieval-augmented few-shot prompting. Without oversimplifying things too much, what happens is that they provide more context within their prompting by injecting unstructured texts from relevant search results (web pages). This is the retrieval component of the system, powered by Edge's search engine (or a variant of it). This way, it is able to keep track of the source document of the injected texts. 
+Bing relies on a method they coin as "[grounding](https://www.searchenginejournal.com/how-bing-ai-search-uses-web-content/480643/)". A general form of this method is also known as retrieval-augmented few-shot prompting. Without oversimplifying things too much, what happens is that they provide more context to the model by adding unstructured texts from relevant search results (web pages). This is the retrieval component of the system, powered by Edge's search engine (or a variant of it). This way, it is able to keep track of the source document of the injected texts. 
 
-This means that the references provided by Bing are from the additional context texts in the prompts, not the initial training corpus. It is important to distinguish between these two sources, and the reason for our avoiding this is explained in the following section.
+Essentially, references provided by Bing are from the additional context texts in the prompts or additional embeddings on top of the GPT embeddings, not the initial training corpus. It is important to distinguish between these two sources, and the reason for our avoiding this is explained in the following section.
 
 ## How does AI-Daleel approach text synthesis?
 Currently, there are two tasks that rely on GPT text synthesis in AI-Daleel. Namely, this is the AI Search feature and the AI Generate Notes feature.
