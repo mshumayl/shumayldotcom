@@ -11,22 +11,6 @@ interface Project {
   imageUrl: string;
 }
 
-
-export async function getStaticProps(): Promise<{ props: { projects: Project[] } }> {
-  const projects = [
-        {
-            title: "AI-Daleel",
-            description: "Uses generative AI technology to provide relevant Quran verses based on rough transliterations, plain language keywords, and semantic relevance. I also wrote a <a href='/post/aidaleel-architecture'>deep dive on the systems architecture</a>.",
-            imageUrl: "/images/ai-daleel-landing-page.jpg",
-            link: "https://www.ai-daleel.com/",
-            status: "LIVE",
-        },
-  ]
-
-  return {props: {projects}};
-};
-
-
 export default function Projects({ projects }: { projects: Project[] }) {
 
   return (
