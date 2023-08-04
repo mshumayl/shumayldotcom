@@ -1,6 +1,6 @@
 ---
 title: 'Dynamically Generated Fields Based on Delimitered Input'
-image: '/images/deepmind-Snqm29dhfOk-unsplash.jpg'
+image: '/images/multi-inputs-paste-result.gif'
 excerpt: 'Taking your UX game up a notch.'
 date: '2023-07-20'
 tags: 
