@@ -78,8 +78,8 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
                 <div className="font-grotesk text-gray-300 [&>p>a]:text-gray-100 leading-loose
                  [&>ul>li>a]:text-gray-100 [&>h2]:text-gray-100 [&>h3]:text-gray-200 [&>h4]:text-gray-200 
                  [&>p>code]:text-gray-100 [&>p>code]:bg-gray-700 [&>p>code]:rounded-md 
-                 [&>p>code]:p-0.5 [&>p>code]:m-0.5 [&>p>code]:text-xs [&>p>code]:font-cascadia [&>p>code]:tracking-wider
-                 [&>pre>code]:font-cascadia
+                 [&>p>code]:p-0.5 [&>p>code]:m-0.5 [&>p>code]:text-xs [&>p>code]:font-mono [&>p>code]:tracking-wider
+                 [&>pre>code]:font-mono
                  [&>p>em]:flex [&>p>em]:justify-center [&>p>em]:text-gray-400 [&>p>em]:text-sm 
                  [&>p>img]:flex [&>p>img]:mx-auto [&>p>img]:border-2 [&>p>img]:border-gray-700 [&>p>img]:rounded-xl
                  [&>pre]:m-auto [&>pre]:border-2 [&>pre]:border-gray-700 
