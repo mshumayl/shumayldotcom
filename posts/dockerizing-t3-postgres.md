@@ -131,6 +131,9 @@ In this instance (😉), one solution is to pull a database image from public re
 
 A more convenient solution is to use [Docker Compose](https://docs.docker.com/compose/). It is a tool for basic multi-container orchestration for single-host deployments. It lets you define your containers (i.e. services) and configure their dependencies, networking, environment variables, shared volumes, and a few other features. You can think of Docker Compose as a second-degree abstraction over our `Dockerfile`, as these configurations are normally done manually when running the `docker run` command.
 
+![](/images/docker-structure.jpg)
+*Docker Compose automatically places both application and database containers within a single isolated network. Connections from the host machine will need to be done through an exposed port.*
+
 As we want to configure a database instance that can be deployed alongside our application, we can use Docker Compose to build a separate container for our database and run them along with our application container in an orchestrated manner. This saves us from having to tediously run multiple Docker commands sequentially on our own and reduces rooms for errors.
 
 ### Using Docker Compose
