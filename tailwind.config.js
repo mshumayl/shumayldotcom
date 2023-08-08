@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'grotesk': ['Space Grotesk', 'sans-serif'],
-        'cascadia': ['cascadia', 'mono']
+        'hubot': ['Hubot Sans', 'sans-serif']
       },
     },
   },
