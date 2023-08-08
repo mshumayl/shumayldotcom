@@ -72,20 +72,22 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
         <>
             <PostMetaTags title={title} excerpt={excerpt} slug={slug} domain="www.shumayl.com"/>
             <Header/>
-            <div className='prose my-10 mx-auto'>
+            <div className='prose md:prose-lg my-10 mx-auto'>
                 <h1 className="font-grotesk font-extralight text-gray-50">{title}</h1>
                 <div className="font-grotesk text-sm tracking-wider text-gray-50">{date}</div>
-                <div className="font-grotesk text-gray-300 [&>p>a]:text-gray-100 leading-loose
+                <div className="font-hubot text-gray-300 [&>p>a]:text-gray-100 leading-loose
                  [&>ul>li>a]:text-gray-100 [&>h2]:text-gray-100 [&>h3]:text-gray-200 [&>h4]:text-gray-200 
                  [&>p>code]:text-gray-100 [&>p>code]:bg-gray-700 [&>p>code]:rounded-md 
-                 [&>p>code]:p-0.5 [&>p>code]:m-0.5 [&>p>code]:text-xs [&>p>code]:font-mono [&>p>code]:tracking-wider
-                 [&>pre>code]:font-mono
+                 [&>p>code]:p-0.5 [&>p>code]:m-0.5 [&>p>code]:text-xs [&>p>code]:font-grotesk [&>p>code]:tracking-wider
+                 [&>pre>code]:font-grotesk
                  [&>p>em]:flex [&>p>em]:justify-center [&>p>em]:text-gray-400 [&>p>em]:text-sm 
-                 [&>p>img]:flex [&>p>img]:mx-auto [&>p>img]:border-2 [&>p>img]:border-gray-700 [&>p>img]:rounded-xl
-                 [&>pre]:m-auto [&>pre]:border-2 [&>pre]:border-gray-700 
-                 [&>nav]:rounded-lg [&>nav]:bg-gray-800 [&>nav]:p-2 [&>nav]:mt-6 [&>nav]:border-2 [&>nav]:border-gray-700
+                 [&>p>img]:flex [&>p>img]:mx-auto  [&>p>img]:rounded-xl
+                 [&>pre]:m-auto 
+                 [&>nav]:rounded-lg [&>nav]:mt-6 [&>nav]:px-6 [&>nav]:py-4 [&>nav]:border-2 [&>nav]:border-gray-800
                  [&>nav]:before:content-['Table_of_Contents']
                  [&>ol>li>code]:text-gray-100 [&>ol>li>code]:bg-gray-700 [&>ol>li>code]:rounded-md [&>ol>li>code]:p-0.5 [&>ol>li>code]:m-0.5 [&>ol>li>code]:text-xs
+                 [&>ul>li>code]:text-gray-100 [&>ul>li>code]:bg-gray-700 [&>ul>li>code]:rounded-md [&>ul>li>code]:p-0.5 [&>ul>li>code]:m-0.5 [&>ul>li>code]:text-xs
+                 [&>ul>li>em>code]:text-gray-100 [&>ul>li>em>code]:bg-gray-700 [&>ul>li>em>code]:rounded-md [&>ul>li>em>code]:p-0.5 [&>ul>li>em>code]:m-0.5 [&>ul>li>em>code]:text-xs
                  " dangerouslySetInnerHTML={{ __html: content }}/>
                 <div>
                     <ReturnHomeButton/>

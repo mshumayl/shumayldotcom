@@ -4,8 +4,12 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: "cascadia";
-    src: url("/fonts/CascadiaCode-Regular.ttf");
+    font-family: "Hubot Sans";
+    src: 
+        url("/fonts/Hubot-Sans.woff2") format('woff2 supports variations'),
+        url("/fonts/Hubot-Sans.woff2") format('woff2-variations');
+    font-weight: 300;
+    font-stretch: 105%;
 }
 
 .icon-link {

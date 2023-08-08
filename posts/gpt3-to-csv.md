@@ -2,7 +2,7 @@
 title: 'Using AI to Generate Data On-Demand'
 image: '/images/deepmind-Snqm29dhfOk-unsplash.jpg'
 excerpt: 'Harnessing the power of Large Language Models.'
-date: '2022-01-16'
+date: '2023-01-16'
 tags: 
     - 'machine-learning'
     - 'experiment'

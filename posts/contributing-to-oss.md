@@ -2,7 +2,7 @@
 title: 'Contributing Code to Open Source'
 image: '/images/my-life-through-a-lens-bq31L0jQAjU-unsplash.jpg'
 excerpt: 'Crafting the perfect PR.'
-date: '2022-01-17'
+date: '2023-01-23'
 tags: 
     - 'open-source'
     - 'tutorial'
