@@ -288,7 +288,7 @@ We have made the following adjustments:
    This script performs the database schema migrations, generate Prisma client, and runs the application server.
 2. We exposed port 22 for SSH purposes. This is for future convenience should you need to peek into the container filesystem.
 
-By running the schema migrations on container start, we can ensure that the database is reachable from the application container and has a consistent state with Prisma's shadow database.
+By running the schema migrations on container start, we can ensure that the database is reachable from the application container and has a consistent state with Prisma's shadow database. The schema migrations are done based on your T3 project's [`schema.prisma` file](https://www.shumayl.com/post/dockerizing-t3-postgres). 
 
 ## Building and deploying the application
 At this point, our application and database containers are ready to be built and run on the remote server. In short, here's what we need to do:
