@@ -312,12 +312,11 @@ Next, we have to run `docker-compose push` to publish the images we built to a c
 
 After that, we can start setting up our server for the deployment. We need to copy these important files into the server filesystem:
 - `.env` (_there are best practices in handling `.env` files in deployment environments, but we'll omit them now for the sake of brevity_)
-- `Dockerfile`
 - `docker-compose.yaml`
 
 You can use the `scp` command-line tool to copy these files into a project directory in your remote server:
 ```
-> scp C:/path/to/project/.env C:/path/to/project/Dockerfile C:/path/to/project/docker-compose.yaml <remote_user>@<remote_host>:~/<remote-project-dir>
+> scp C:/path/to/project/.env C:/path/to/project/docker-compose.yaml <remote_user>@<remote_host>:~/<remote-project-dir>
 ```
 
 Next, in the remote server, you can now run `docker-compose pull` in the `/remote-project-dir` to pull the image based on the image name specified in the `docker-compose.yaml`. If you didn't prefix the image name (`services.app.image`) with a container registry host, it will search for this image in Docker Hub. You may be prompted to provide your login credentials for the container registry if you haven't logged in yet.
