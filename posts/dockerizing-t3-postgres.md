@@ -294,7 +294,7 @@ We have made the following adjustments:
 By running the schema migrations on container start, we can ensure that the database is reachable from the application container and has a consistent state with Prisma's shadow database. The schema migrations are done based on your T3 project's [`prisma/schema.prisma` file](https://www.shumayl.com/post/dockerizing-t3-postgres) and the migration history in `prisma/migrations`. 
 
 ## Building and deploying the application
-At this point, our application and database containers are ready to be built and run on the remote server. In short, here's what we need to do:
+At this point, our application and database containers are ready to be built and run on the remote server. In short, here's what we need to do next:
 1. Build the image.
 2. Push the image to an online registry.
 3. Copy required files into the remote server and SSH into it.
