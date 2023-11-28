@@ -3,9 +3,15 @@ title: 'About'
 image: '/images/test-img.jpg'
 ---
 
-My name is Shumayl Asmawi, and I am a Systems Engineer at HP Inc (Hewlett-Packard). In my professional life, I build software systems that support HP's manufacturing operations, from web apps to industrial data pipelines. 
+Hi! I'm Shumayl. I'm a cloud engineer at Deloitte, working with the global AWS platform team. Previously, I was a systems engineer with the Digital Transformation team at HP Inc.
 
-In my free time, I enjoy tinkering with open source projects and building with cool new software technologies. I also created [AI-Daleel](https://ai-daleel.com/), an AI-powered al-Quran research tool.
+My current passions revolve around infrastructure-as-code, microservices, and cloud automation. 
+
+I also enjoy exploring and writing about technology and software in general.
+
+I am a proud alumnus of Universiti Teknologi PETRONAS, where I obtained a degree in physics.
+
+In my free time, I enjoy tinkering with open source projects and building with cool new software technologies. I created [AI-Daleel](https://ai-daleel.com/) to help me easily search for Quranic verses.
 
 On this site, I share my insights, knowledge, and ideas on the things that I learn and discover in my professional and personal projects. Most of my personal projects are open-sourced on [GitHub](https://github.com/mshumayl/).
 
