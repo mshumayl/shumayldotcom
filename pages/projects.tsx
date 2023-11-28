@@ -32,7 +32,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
                             </div>
                             <div className="leading-relaxed font-grotesk text-md mb-2">
                               <span>
-                                <p>Full-stack web app with generative AI technology to provide relevant Quran verses based on rough transliterations, plain language keywords, and semantic relevance.</p>
+                                <p>A web app utilizing generative AI technology to offer relevant Quran verses based on rough transliterations, plain language keywords, and semantic relevance. That&apos;s a fancy way of saying it&apos;s just another GPT wrapper.</p>
                                 <p className="mt-4">I also published a <Link className="underline underline-offset-2 after:content-['_↗']" href='/post/aidaleel-architecture'>technical article on the systems architecture</Link>.</p></span>
                             </div>
                             <Link href="https://www.ai-daleel.com/" className="flex bg-slate-700 h-8 w-full items-center justify-center font-grotesk rounded-xl mt-4 hover:bg-slate-600">Live site</Link>

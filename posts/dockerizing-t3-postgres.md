@@ -185,7 +185,6 @@ services:
     working_dir: /app
     ports:
       - "3000:3000" # app
-      - "2222:22" # map host port 2222 to container port 22 for ssh
     image: t3_app # name of image
     env_file:
       - .env # gets all app-related env var
@@ -194,7 +193,7 @@ services:
         condition: service_healthy
 
 volumes:
-  db_data:
+  db_data: # persistent data
 ```
 Pay attention to the following changes that we have made to the original `docker-compose.yaml`:
 1. We have added a service called `db`, which has the `postgres:latest` as the base image. By default it will get the image from Docker Hub, unless you prefix this with a container registry host of your choice.
@@ -203,14 +202,12 @@ Pay attention to the following changes that we have made to the original `docker
 4. We used the `pg_isready` command to perform database healthchecks during the initial container run.
 5. We added `services.app.depends_on.db.condition: service_healthy` to only start the application container if the database container has been successfully started.
 
-We also need to make some changes to our `Dockerfile` to accommodate this:
+We also need to make some changes to our `Dockerfile` to allow schema initialization with Prisma:
 ```Dockerfile
 ##### DEPENDENCIES
 
 FROM --platform=linux/amd64 node:16-alpine3.17 AS deps
 RUN apk add --no-cache libc6-compat openssl1.1-compat
-RUN apk add --no-cache openssh-server
-RUN ssh-keygen -A
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
@@ -265,20 +262,15 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 COPY --from=builder /app/prisma ./prisma
 
-# Expose port for SSH
-
-EXPOSE 22
-
 USER nextjs
 EXPOSE 3000
 ENV PORT 3000
 
 # Run custom startup script defined in package.json
 
-CMD ["sh", "-c", "npm run start:migrate:pod && /usr/sbin/sshd -D"]
+CMD ["sh", "-c", "npm run start:migrate:pod"]
 ```
-We have made the following adjustments:
-1. We run a custom script to start the application. The custom script is defined in `package.json` under `scripts`:
+In the final line of the code snippet above, we run a script called `start:migrate:pod` to serve our application. This custom script is defined in `package.json` under `scripts`:
    ```
    {
     scripts: {
@@ -288,8 +280,7 @@ We have made the following adjustments:
     }
    }
    ```
-   This script performs the database schema migrations, generate Prisma client, and runs the application server.
-2. We exposed port 22 for SSH purposes. This is for future convenience should you need to peek into the container filesystem.
+This script performs the database schema migrations, generate Prisma client, and runs the application server.
 
 By running the schema migrations on container start, we can ensure that the database is reachable from the application container and has a consistent state with Prisma's shadow database. The schema migrations are done based on your T3 project's [`prisma/schema.prisma` file](https://www.shumayl.com/post/dockerizing-t3-postgres) and the migration history in `prisma/migrations`. 
 
@@ -330,8 +321,8 @@ CONTAINER ID   IMAGE                                COMMAND               CREATE
 You can verify that the application has been successfully deployed by connecting to the IP or FQDN of your server along with the application port 3000 from your local browser.
 
 ## Et voila
-You can see how Docker Compose makes it easy to deploy your solution stack on a remote server in a reproducible manner. Whenever your application code or dependency changes, you can redeploy the application by simply running `docker-compose build`, `docker-compose push` on your development machine, then running `docker-compose pull` and `docker-compose up -d` on your deployment machine. It can't get any easier than this.
+You can see how Docker Compose makes it easy to deploy your solution stack on a remote server in a reproducible manner. Whenever your application code or dependency changes, you can redeploy the application by simply running `docker-compose build` and `docker-compose push` on your development machine, then running `docker-compose pull` and `docker-compose up -d` on your deployment machine. It can't get any easier than this.
 
-Well, actually, it can! You can take the automation a step further by setting up a CI/CD pipeline that automatically builds images, push them to a registry, and deploys them in a remote server — based on changes made to a branch on a source code repository like GitHub. This requires the use of pipeline agents that help trigger jobs based on a set of predefined conditions.
+Well, actually, it can! You can take the automation a step further by setting up a CI/CD pipeline that automatically builds images, push them to a registry, and deploys them in a remote server — based on changes made to a branch on a source code repository like GitHub. This requires the use of pipeline agents that help trigger jobs based on a set of predefined conditions. This is out of the scope of the post for now, but keep in mind that there are ways to optimize this even further.
 
-Thank you for reading this, and I hope that this post gave you a better picture on the deployment flow of a T3 application with a database instance using Docker Compose.
+I hope that this post gave you a better picture on the deployment flow of a T3 application with a database instance using Docker Compose. Thank you for your read!
