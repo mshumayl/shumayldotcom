@@ -5,9 +5,7 @@ image: '/images/test-img.jpg'
 
 Hi! I'm Shumayl. I'm a cloud engineer at Deloitte, working with the global AWS platform team. Previously, I was a systems engineer with the Digital Transformation team at HP Inc.
 
-My current passions revolve around infrastructure-as-code, microservices, and cloud automation. 
-
-I also enjoy exploring and writing about technology and software in general.
+My current interests revolve around infrastructure-as-code, microservices, and cloud automation. I also enjoy exploring and writing about technology and software in general.
 
 I am a proud alumnus of Universiti Teknologi PETRONAS, where I obtained a degree in physics.
 
