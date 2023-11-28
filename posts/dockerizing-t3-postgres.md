@@ -185,7 +185,6 @@ services:
     working_dir: /app
     ports:
       - "3000:3000" # app
-      - "2222:22" # map host port 2222 to container port 22 for ssh
     image: t3_app # name of image
     env_file:
       - .env # gets all app-related env var
@@ -194,7 +193,7 @@ services:
         condition: service_healthy
 
 volumes:
-  db_data:
+  db_data: # persistent data
 ```
 Pay attention to the following changes that we have made to the original `docker-compose.yaml`:
 1. We have added a service called `db`, which has the `postgres:latest` as the base image. By default it will get the image from Docker Hub, unless you prefix this with a container registry host of your choice.
@@ -209,8 +208,6 @@ We also need to make some changes to our `Dockerfile` to accommodate this:
 
 FROM --platform=linux/amd64 node:16-alpine3.17 AS deps
 RUN apk add --no-cache libc6-compat openssl1.1-compat
-RUN apk add --no-cache openssh-server
-RUN ssh-keygen -A
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
@@ -265,17 +262,13 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 COPY --from=builder /app/prisma ./prisma
 
-# Expose port for SSH
-
-EXPOSE 22
-
 USER nextjs
 EXPOSE 3000
 ENV PORT 3000
 
 # Run custom startup script defined in package.json
 
-CMD ["sh", "-c", "npm run start:migrate:pod && /usr/sbin/sshd -D"]
+CMD ["sh", "-c", "npm run start:migrate:pod"]
 ```
 We have made the following adjustments:
 1. We run a custom script to start the application. The custom script is defined in `package.json` under `scripts`:
@@ -289,7 +282,6 @@ We have made the following adjustments:
    }
    ```
    This script performs the database schema migrations, generate Prisma client, and runs the application server.
-2. We exposed port 22 for SSH purposes. This is for future convenience should you need to peek into the container filesystem.
 
 By running the schema migrations on container start, we can ensure that the database is reachable from the application container and has a consistent state with Prisma's shadow database. The schema migrations are done based on your T3 project's [`prisma/schema.prisma` file](https://www.shumayl.com/post/dockerizing-t3-postgres) and the migration history in `prisma/migrations`. 
 
