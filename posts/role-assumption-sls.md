@@ -10,7 +10,7 @@ tags:
 ---
 
 ## Serverless Framework
-Serverless Framework (SLS) is an Infrastructure-as-Code (IaC) tool that helps us build and deploy our systems on the cloud providers of our choice in an abstracted and declarative manner. We define our services in a `serverless.yml` file, and SLS transforms that into actual resources on the cloud. For AWS, SLS creates CloudFormation stacks on our behalf, which in turn provisions and performs configurations on the resources we requested.
+[Serverless Framework](https://www.serverless.com/framework/docs) (SLS) is an Infrastructure-as-Code (IaC) tool that helps us build and deploy our systems on the [cloud providers](https://www.serverless.com/framework/docs/providers) of our choice in an abstracted and declarative manner. We define our services in a `serverless.yml` file, and SLS transforms that into actual resources on the cloud. For AWS, SLS creates CloudFormation stacks on our behalf, which in turn provisions and performs configurations on the resources we requested.
 
 ## Role Assumption
 Role assumption is a mechanism that allows an entity to temporarily assume a different set of permissions defined by an IAM role. This effectively elevates the privileges of that entity and allows it to execute actions on AWS resources that it otherwise has no access to.
