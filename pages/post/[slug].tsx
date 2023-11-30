@@ -87,6 +87,7 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
                  [&>nav]:before:content-['Table_of_Contents']
                  [&>ol>li>code]:text-gray-100 [&>ol>li>code]:bg-gray-700 [&>ol>li>code]:rounded-md [&>ol>li>code]:p-0.5 [&>ol>li>code]:m-0.5 [&>ol>li>code]:text-xs
                  [&>ul>li>code]:text-gray-100 [&>ul>li>code]:bg-gray-700 [&>ul>li>code]:rounded-md [&>ul>li>code]:p-0.5 [&>ul>li>code]:m-0.5 [&>ul>li>code]:text-xs
+                 [&>ol>li>ul>li>code]:text-gray-100 [&>ol>li>ul>li>code]:bg-gray-700 [&>ol>li>ul>li>code]:rounded-md [&>ol>li>ul>li>code]:p-0.5 [&>ol>li>ul>li>code]:m-0.5 [&>ol>li>ul>li>code]:text-xs
                  [&>ul>li>em>code]:text-gray-100 [&>ul>li>em>code]:bg-gray-700 [&>ul>li>em>code]:rounded-md [&>ul>li>em>code]:p-0.5 [&>ul>li>em>code]:m-0.5 [&>ul>li>em>code]:text-xs
                  [&>p>a>code]:text-gray-100 [&>p>a>code]:bg-gray-700 [&>p>a>code]:rounded-md [&>p>a>code]:p-0.5 [&>p>a>code]:m-0.5 [&>p>a>code]:text-xs
                  " dangerouslySetInnerHTML={{ __html: content }}/>
