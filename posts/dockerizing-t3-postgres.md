@@ -4,8 +4,6 @@ image: '/images/t3-docker-pgsql.jpg'
 excerpt: 'Automate your software deployment!'
 date: '2023-08-08'
 tags: 
-    - 'devops'
-    - 'docker'
     - 'systems'
     - 'tutorial'
 ---

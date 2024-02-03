@@ -4,25 +4,24 @@ image: '/images/role-assumption.jpg'
 excerpt: 'Performing IAM role assumption with SLS.'
 date: '2023-11-30'
 tags: 
-    - 'systems'
     - 'cloud'
     - 'tutorial'
 ---
 
 ## Serverless Framework
-[Serverless Framework](https://www.serverless.com/framework/docs) (SLS) is an Infrastructure-as-Code (IaC) tool that helps us build and deploy our systems on the [cloud providers](https://www.serverless.com/framework/docs/providers) of our choice in an abstracted and declarative manner. We define our services in a `serverless.yml` file, and SLS transforms that into actual resources on the cloud. For AWS, SLS creates CloudFormation stacks on our behalf, which in turn provisions and performs configurations on the resources we requested.
+Before we proceed with AWS, let's talk about the [Serverless Framework](https://www.serverless.com/framework/docs). Commonly abbreviated as SLS, it is an Infrastructure-as-Code (IaC) tool that helps us build and deploy our systems on the [cloud providers](https://www.serverless.com/framework/docs/providers) of our choice in an abstracted and declarative manner. We define our services in a `serverless.yml` file, and SLS transforms that into actual resources on the cloud. For AWS, SLS creates CloudFormation stacks on our behalf, which in turn provisions and performs configurations on the resources we requested.
 
 ## Role Assumption
-Role assumption is a mechanism that allows an entity to temporarily assume a different set of permissions defined by an IAM role. This effectively elevates the privileges of that entity and allows it to execute actions on AWS resources that it otherwise has no access to.
+Before we proceed, let's have a little refresher on the concept of role assumption. Role assumption is a mechanism that allows an entity to temporarily assume a different set of permissions defined by an IAM role. This effectively elevates the privileges of that entity and allows it to execute actions on AWS resources that it otherwise has no access to.
 
 A conventional use-case for this mechanism is when an "Admin" account with wide-access role needs to assume into a "Target" account to perform a specific operation on the resources in the Target account.
 
 A more specific example is a Lambda function deployed in an Admin account that requires access to read the list of S3 buckets in a Target account. Since the Admin account doesn't inherently have direct access to resources in the Target account, the Lambda function needs to assume a specific IAM role within the Target account. This role is configured with the necessary permissions to perform the read operation on the list of S3 buckets.
 
 ## Cross-Account Lambda Deployment and Reading S3 List with Role Assumption
-Let's demonstrate this with an example. We need to list all S3 buckets in a Target account, and we need to use a Lambda function to do this. The Lambda function needs to be deployed from an Admin account. There are two things to consider:
+Now, let's demonstrate this with an example. Let's say we need to list all S3 buckets in a Target account, and we need to use a Lambda function to do this. The Lambda function needs to be deployed from an Admin account. There are two things we have to consider:
 1. The Lambda function needs to be created by an account with a role that allows the `AWSLambda_FullAccess` policy. We'll call this `MyLambdaExecutionRole`
-2. The Lambda function needs to perform role assumption into the Target account with a role that allows `AmazonS3ReadOnlyAccess` policy to read the list of S3 buckets. We'll call this `MyS3ReadRole`. 
+2. The Lambda function needs to perform role assumption into the Target account with a role that allows `AmazonS3ReadOnlyAccess` policy to read the list of S3 buckets. We'll call this `MyS3ReadRole`.
 
 Here's a simplified diagram depicting what we're trying to achieve here:
 ![Role assumption.](/images/role-assumption.jpg)
@@ -103,7 +102,7 @@ So we have to prepare three files, namely `serverless.yml`, `list_s3.py`, and op
 
      return buckets
    ```
-3. `variables.dev.yml` (Optional)
+3. `variables.dev.yml`
    - This is where we can store the role names and account IDs. Defining these values as variables in `serverless.yml` allows us to perform these operations dynamically without any hard-coded values.
    ```
    admin-account-id: "111111111111"
