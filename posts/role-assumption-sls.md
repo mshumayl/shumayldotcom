@@ -12,7 +12,7 @@ tags:
 Before we proceed with AWS, let's talk about the [Serverless Framework](https://www.serverless.com/framework/docs). Commonly abbreviated as SLS, it is an Infrastructure-as-Code (IaC) tool that helps us build and deploy our systems on the [cloud providers](https://www.serverless.com/framework/docs/providers) of our choice in an abstracted and declarative manner. We define our services in a `serverless.yml` file, and SLS transforms that into actual resources on the cloud. For AWS, SLS creates CloudFormation stacks on our behalf, which in turn provisions and performs configurations on the resources we requested.
 
 ## Role Assumption
-Before we proceed, let's have a little refresher on the concept of role assumption. Role assumption is a mechanism that allows an entity to temporarily assume a different set of permissions defined by an IAM role. This effectively elevates the privileges of that entity and allows it to execute actions on AWS resources that it otherwise has no access to.
+Next, let's have a little refresher on the concept of role assumption. Role assumption is a mechanism that allows an entity to temporarily assume a different set of permissions defined by an IAM role. This effectively elevates the privileges of that entity and allows it to execute actions on AWS resources that it otherwise has no access to.
 
 A conventional use-case for this mechanism is when an "Admin" account with wide-access role needs to assume into a "Target" account to perform a specific operation on the resources in the Target account.
 
@@ -112,6 +112,6 @@ So we have to prepare three files, namely `serverless.yml`, `list_s3.py`, and op
    s3-read-role: MyS3ReadRole
    ```
 
-Once we have all three files prepared, we can now deploy to AWS using the `sls deploy` command. SLS will start the process by verifying the files and then creating a stack accordingly on AWS CloudFormation. We can verify that the stack has been created by visiting the CloudFormation console and viewing the "Stacks" tab.
+Once we have all three files prepared, we can now deploy to AWS using the `sls deploy` command. SLS will start the process by verifying the files and then creating a stack accordingly on AWS CloudFormation.
 
 Once the update is complete, we can trigger the Lambda function from within our Admin account by visiting the Lambda console and manually running the function from the "Test" tab. If it is successful, we'll be able to see the response object returned from the Lambda function, and the `"body"` key of the object will contain a list of all our S3 resources in the Target account.
