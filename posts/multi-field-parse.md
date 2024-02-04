@@ -6,7 +6,6 @@ date: '2023-07-20'
 tags: 
     - 'tutorial'
     - 'web-dev'
-    - 'react'
 ---
 ## How does it look like in action?
 This type of form can be seen in sites where you're expected to paste in semi-structured inputs like a collection of environment variables:

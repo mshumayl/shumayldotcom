@@ -5,7 +5,6 @@ excerpt: 'A deep dive into the AI-Daleel system architecture.'
 date: '2023-04-30'
 tags: 
     - 'systems'
-    - 'web-dev'
     - 'machine-learning'
 ---
 
