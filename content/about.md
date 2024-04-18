@@ -3,12 +3,12 @@ title: 'About'
 image: '/images/test-img.jpg'
 ---
 
-My name is Shumayl.
+Shumayl is a builder, a tinkerer, and a self-proclaimed nerd. 
 
-I am currently a cloud engineer at Deloitte Global, working on platform engineering. Previously, I was a systems engineer with the digital transformation team at HP Inc.
+In his role as a Cloud Engineer with the AWS Platform Engineering team at Deloitte Global, he develops cloud security guardrails and self-service infrastructure automations. These solutions are used by internal business functions and client-facing managed service providers globally.
 
-I post my writings on this site as a way to reinforce my learnings and share what I have learnt with the community.
+Previously, he was a Systems Engineer with the Digital Transformation team at HP Inc., where he worked on digitization and process automation.
 
-I am a proud alumnus of Universiti Teknologi PETRONAS, where I obtained a Bsc. in Applied Physics.
+He's a proud alumnus of Universiti Teknologi PETRONAS, where he graduated with a BSc. in Applied Physics with a specialization in Nanotechnology.
 
-You can find me on [LinkedIn](https://www.linkedin.com/in/shumayl-111/) and [Twitter](https://twitter.com/Shumayl_), where I am happy to connect with like-minded individuals, professionals, and fellow nerds.
+You can find him on [LinkedIn](https://www.linkedin.com/in/shumayl-111/) and [Twitter](https://twitter.com/Shumayl_), where he's happy to connect with fellow nerds.
