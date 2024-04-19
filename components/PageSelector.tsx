@@ -1,8 +1,3 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import path from 'path';
-import Tags from './Tags';
-
 interface PageSelectorProps {
     currentPage: number;
     pageRange: number;

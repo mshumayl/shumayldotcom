@@ -11,6 +11,7 @@ import remarkSlug from 'remark-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { unified } from 'unified';
 import rehypeToc from 'rehype-toc';
+import PostDisclaimer from '../../components/PostDisclaimer';
 
 export async function getStaticPaths() {
     const files = await fs.readdir('posts');
@@ -91,6 +92,7 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
                  [&>ul>li>em>code]:text-gray-100 [&>ul>li>em>code]:bg-gray-700 [&>ul>li>em>code]:rounded-md [&>ul>li>em>code]:p-0.5 [&>ul>li>em>code]:m-0.5 [&>ul>li>em>code]:text-xs
                  [&>p>a>code]:text-gray-100 [&>p>a>code]:bg-gray-700 [&>p>a>code]:rounded-md [&>p>a>code]:p-0.5 [&>p>a>code]:m-0.5 [&>p>a>code]:text-xs
                  " dangerouslySetInnerHTML={{ __html: content }}/>
+                <PostDisclaimer/>
                 <div>
                     <ReturnHomeButton/>
                 </div>
