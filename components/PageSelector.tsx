@@ -13,16 +13,17 @@ const PageSelector: React.FC<PageSelectorProps> = ({currentPage, pageRange, hand
     const pages = Array.from({ length: pageRange }, (_, index) => index+1);
     return (
         <>
-            <div className="flex flex-row mt-5 mb-0 font-grotesk md:tracking-widest">
+            <div className="justify-end flex flex-row mt-5 mb-0 font-grotesk md:tracking-widest">
                 <ul className="flex space-x-1 list-none">
-                    <div>
-                        Pages:
-                    </div>
-                    <button className="flex flex-row flex-wrap">
+                    <button className="focus:text-slate-500" onClick={() => handlePageClick(1)}>{"<<"}</button>
+                    <div className="flex flex-row flex-wrap">
                         {pages.map((val) => (
-                            <div onClick={() => handlePageClick(val)}  className="px-2" key={val}>{val}</div>
+                            (currentPage === val) ?
+                            (<button onClick={() => handlePageClick(val)}  className="underline underline-offset-4 px-2" key={val}>{val}</button>) :
+                            (<button onClick={() => handlePageClick(val)}  className="focus:text-slate-500 px-2" key={val}>{val}</button>)
                         ))}     
-                    </button>
+                    </div>
+                    <button className="focus:text-slate-500" onClick={() => handlePageClick(pageRange)}>{">>"}</button>
                 </ul>
             </div>
         </>

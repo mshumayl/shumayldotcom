@@ -35,6 +35,7 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
         } else {
             setFilteredPosts(filterPostsByTags(posts, selectedTags));
         }
+        filteredPosts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
         setPageCount(Math.ceil(filteredPosts.length/pageSize))
         console.log("Selected page", currentPage)
         setPaginatedPosts(paginatePosts(filteredPosts, currentPage, pageCount))
@@ -60,20 +61,19 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
     flatTags.unshift("all");
     const uniqueTags = [...new Set(flatTags)];
 
-    paginatedPosts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
-    
     return (
         <>
             <div className="my-20">
                 <div className="mx-3">
                     <div className="font-grotesk text-3xl font-extralight tracking-widest">{latestPostSectionTitle}</div>
                     <TagSelector tags={uniqueTags} handleTagClick={handleTagClick}/>
-                    <PageSelector currentPage={0} pageRange={pageCount} handlePageClick={handlePageClick}/>
+                    <PageSelector currentPage={currentPage} pageRange={pageCount} handlePageClick={handlePageClick}/>
                 </div>
                 {!paginatedPosts && 'No posts found.'}
                 {paginatedPosts.map(({ slug, frontmatter }) => (
                     <Card key={slug} slug={slug} frontmatter={frontmatter} handleTagClick={handleTagClick}/>
                 ))}
+                <PageSelector currentPage={currentPage} pageRange={pageCount} handlePageClick={handlePageClick}/>
             </div>
         </>
     )
