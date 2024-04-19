@@ -5,7 +5,7 @@ excerpt: 'DJ Khaled soundbite: Another one.'
 date: '2022-12-20'
 tags: 
     - 'web-dev'
-    - 'meta'
+    - 'thoughts'
 ---
 Another year, [another one](https://www.youtube.com/watch?v=E71Dlf4ccXQ).
 

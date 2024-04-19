@@ -4,8 +4,7 @@ image: '/images/my-life-through-a-lens-bq31L0jQAjU-unsplash.jpg'
 excerpt: 'Crafting the perfect PR.'
 date: '2023-01-23'
 tags: 
-    - 'open-source'
-    - 'tutorial'
+    - 'thoughts'
 ---
 Contributing to open-source software projects can be intimidating, with all the different standards and requirements between different codebases. Some projects have their own [contribution guidelines](https://github.com/einsteinpy/einsteinpy/blob/main/CONTRIBUTING.rst) you can refer to.  
 
