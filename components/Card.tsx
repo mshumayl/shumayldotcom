@@ -14,7 +14,7 @@ const Card: React.FC<CardProps> = ({slug, frontmatter, handleTagClick}: CardProp
     const { title, image, excerpt, tags, date } = frontmatter;
 
     //Decompose tags here
-    console.log(tags)
+    // console.log(tags)
 
 
     return (

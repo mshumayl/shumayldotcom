@@ -15,7 +15,7 @@ function filterPostsByTags(posts: LatestPostsProps[], selectedTags = "") {
 }
 
 function paginatePosts(posts: LatestPostsProps[], currentPage: number, pageCount: number, pageSize: number = 3) {
-    const startIdx = (currentPage - 1) * pageCount;
+    const startIdx = (currentPage - 1) * pageSize;
     const endIdx = startIdx + pageSize;
     return posts.slice(startIdx, endIdx)
 }
@@ -47,6 +47,7 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
 
     const handleTagClick = (tag: string) => {
         setSelectedTags(tag); 
+        setCurrentPage(1);
     }
 
     const handlePageClick = (page: number) => {
