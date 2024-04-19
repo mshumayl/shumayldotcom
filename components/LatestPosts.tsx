@@ -35,11 +35,15 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
         } else {
             setFilteredPosts(filterPostsByTags(posts, selectedTags));
         }
-        filteredPosts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
-        setPageCount(Math.ceil(filteredPosts.length/pageSize))
-        console.log("Selected page", currentPage)
-        setPaginatedPosts(paginatePosts(filteredPosts, currentPage, pageCount))
-    }, [selectedTags, posts, currentPage, filteredPosts, pageCount]);
+    }, [selectedTags, posts]);
+
+    useEffect(() => {
+        if (filteredPosts.length > 0) {
+            filteredPosts.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
+            setPageCount(Math.ceil(filteredPosts.length/pageSize))
+            setPaginatedPosts(paginatePosts(filteredPosts, currentPage, pageCount))   
+        }
+    }, [filteredPosts, currentPage, pageSize, pageCount]);
 
     const handleTagClick = (tag: string) => {
         setSelectedTags(tag); 
