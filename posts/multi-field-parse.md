@@ -4,7 +4,7 @@ image: '/images/multi-inputs-paste-result.gif'
 excerpt: 'Taking your UX game up a notch.'
 date: '2023-07-20'
 tags: 
-    - 'tutorial'
+    - 'experiment'
     - 'web-dev'
 ---
 ## How does it look like in action?

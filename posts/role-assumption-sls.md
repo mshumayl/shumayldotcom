@@ -5,7 +5,7 @@ excerpt: 'Performing IAM role assumption with SLS.'
 date: '2023-11-30'
 tags: 
     - 'cloud'
-    - 'tutorial'
+    - 'experiment'
 ---
 
 ## Serverless Framework

@@ -5,7 +5,7 @@ excerpt: 'Automate your software deployment!'
 date: '2023-08-08'
 tags: 
     - 'systems'
-    - 'tutorial'
+    - 'experiment'
 ---
 ![](/images/t3-docker-pgsql.jpg)
 ## What is the T3 Stack?

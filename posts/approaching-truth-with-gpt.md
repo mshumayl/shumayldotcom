@@ -5,7 +5,7 @@ excerpt: 'How do we optimize towards Truth for AI-Daleel?'
 date: '2023-04-23'
 tags: 
     - 'machine-learning'
-    - 'think-piece'
+    - 'thoughts'
 ---
 
 ![AI-Daleel landing page.](/images/ai-daleel-landing-page.jpg)
