@@ -32,6 +32,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
                             </div>
                             <div className="leading-relaxed font-grotesk text-md mb-2">
                               <span>
+                                <p className="text-xs mb-2 italic">[Temporarily unmaintained]</p>
                                 <p>A web app utilizing generative AI technology to offer relevant Quran verses based on rough transliterations, plain language keywords, and semantic relevance. That&apos;s a fancy way of saying it&apos;s just another GPT wrapper.</p>
                                 <p className="mt-4">I also published a <Link className="underline underline-offset-2 after:content-['_↗']" href='/post/aidaleel-architecture'>technical article on the systems architecture</Link>.</p></span>
                             </div>
