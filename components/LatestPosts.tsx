@@ -3,6 +3,7 @@ import Card from '../components/Card';
 import TagSelector from '../components/TagSelector';
 import { useState, useEffect } from 'react';
 import PageSelector from './PageSelector';
+import Breakline from './Breakline';
 
 interface LatestPostsProps {
     slug: string;
@@ -75,10 +76,22 @@ const LatestPosts: React.FC<{posts: LatestPostsProps[]}> = ({ posts }) => {
                     <PageSelector currentPage={currentPage} pageRange={pageCount} handlePageClick={handlePageClick}/>
                 </div>
                 {!paginatedPosts && 'No posts found.'}
-                {paginatedPosts.map(({ slug, frontmatter }) => (
-                    <Card key={slug} slug={slug} frontmatter={frontmatter} handleTagClick={handleTagClick}/>
+                {paginatedPosts.map(({ slug, frontmatter }, idx) => (
+                    <div className="w-full" key={`${idx}-${slug}`}>
+                        {(idx===0) && (
+                            <div className="-my-6 mt-10">
+                                {/* <Breakline/> */}
+                            </div>
+                        )}
+                        <Card slug={slug} frontmatter={frontmatter} handleTagClick={handleTagClick}/>
+                        <div className="-my-6">
+                            {/* <Breakline/> */}
+                        </div>
+                    </div>
                 ))}
-                <PageSelector currentPage={currentPage} pageRange={pageCount} handlePageClick={handlePageClick}/>
+                <div className="mt-10">
+                    <PageSelector currentPage={currentPage} pageRange={pageCount} handlePageClick={handlePageClick}/>
+                </div> 
             </div>
         </>
     )

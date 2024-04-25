@@ -1,6 +1,5 @@
 ---
 title: 'About'
-image: '/images/test-img.jpg'
 ---
 
 Shumayl is a builder, a tinkerer, and a self-proclaimed nerd. 
@@ -11,4 +10,4 @@ Previously, he was a Systems Engineer with the Digital Transformation team at HP
 
 He's a proud alumnus of Universiti Teknologi PETRONAS, where he graduated with a BSc. in Applied Physics with a specialization in Nanotechnology.
 
-You can find him on [LinkedIn](https://www.linkedin.com/in/shumayl-111/) and [Twitter](https://twitter.com/Shumayl_), where he's happy to connect with fellow nerds.
+You can find him on [LinkedIn](https://www.linkedin.com/in/shumayl) and [Twitter](https://twitter.com/Shumayl_), where he's happy to connect with fellow nerds.
