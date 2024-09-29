@@ -349,7 +349,7 @@ GPT-3.5 is also not fine-tunable through the OpenAI API, but this is fine as for
 ```
 *Providing hundreds of thousands of entries like this will result in a more specialized (fine-tuned) model.*
 
-That being said, a [future improvement to be considered for AI-Daleel](https://www.shumayl.com/post/approaching-truth-with-gpt#possible-improvements-to-consider) is to fine-tune the model by using tools such as LangChain to [add our own tokenized documents](https://github.com/mshumayl/langchain-chroma) on top of the original GPT embeddings. The customized embeddings can then be stored in a dedicated vector store such as ChromaDB.
+That being said, a [future improvement to be considered for AI-Daleel](https://www.shumayl.site/post/approaching-truth-with-gpt#possible-improvements-to-consider) is to fine-tune the model by using tools such as LangChain to [add our own tokenized documents](https://github.com/mshumayl/langchain-chroma) on top of the original GPT embeddings. The customized embeddings can then be stored in a dedicated vector store such as ChromaDB.
 
 In AI-Daleel, we simply provide instructions to the model using the [official Node.js library from OpenAI](https://www.npmjs.com/package/openai). Then, we simply invoke something like the following in our corresponding tRPC protected procedures:
 ```
@@ -373,7 +373,7 @@ const openAiRes = await openai.createChatCompletion({
     messages: [{"role": "user", "content": prompt}]
 })
 ```
-AI-Daleel requests the OpenAI API to [return the results in a JSON format](https://www.shumayl.com/post/approaching-truth-with-gpt). Therefore, it is important to do some server-side processing to ensure that no broken response is sent to the client, and if any unexpected response is received, the right toasts will need to be risen on the client side. This way, the app will be secure from LLM-specific vulnerabilities such as [prompt injection](https://simonwillison.net/2022/Sep/12/prompt-injection/).
+AI-Daleel requests the OpenAI API to [return the results in a JSON format](https://www.shumayl.site/post/approaching-truth-with-gpt). Therefore, it is important to do some server-side processing to ensure that no broken response is sent to the client, and if any unexpected response is received, the right toasts will need to be risen on the client side. This way, the app will be secure from LLM-specific vulnerabilities such as [prompt injection](https://simonwillison.net/2022/Sep/12/prompt-injection/).
 ```
 try {
     console.log("DATA: ", data);

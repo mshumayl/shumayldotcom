@@ -42,7 +42,7 @@ export default async function handler(req: NextRequest) {
               paddingBottom: '5px',
             }}
           >
-            {"Shumayl.com >"}
+            {"shumayl.site >"}
           </div>
           <div
             style={{

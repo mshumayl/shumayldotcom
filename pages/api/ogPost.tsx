@@ -48,7 +48,7 @@ export default async function handler(req: NextRequest) {
               justifyContent: 'flex-end',
             }}
           >
-            {"Shumayl.com"}
+            {"shumayl.site"}
           </div>
           <div
             style={{

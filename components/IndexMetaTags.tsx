@@ -3,8 +3,8 @@ import Head from 'next/head';
 const IndexMetaTags: React.FC = () => {
     
     const excerpt = "Notes on software and tech.";
-    const title = "Shumayl.com";
-    const domain = "www.shumayl.com"
+    const title = "shumayl.site";
+    const domain = "www.shumayl.site"
 
     return (
         <>

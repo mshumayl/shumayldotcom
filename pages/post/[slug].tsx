@@ -71,7 +71,7 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
     
     return (
         <>
-            <PostMetaTags title={title} excerpt={excerpt} slug={slug} domain="www.shumayl.com"/>
+            <PostMetaTags title={title} excerpt={excerpt} slug={slug} domain="www.shumayl.site"/>
             <Header/>
             <div className='prose md:prose-lg my-10 mx-auto'>
                 <h1 className="font-grotesk font-extralight text-gray-50">{title}</h1>

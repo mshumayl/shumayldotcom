@@ -9,7 +9,7 @@ tags:
 ---
 ![](/images/t3-docker-pgsql.jpg)
 ## What is the T3 Stack?
-The [T3 stack](https://create.t3.gg/) is a Next.js-based TypeScript stack featuring Prisma as the ORM, tRPC for GraphQL-esque type-safe APIs for client-server communication, NextAuth.js for authentication, and Tailwind CSS for utility-first styling. You can read more about how a T3 app operates from [my previous post](https://www.shumayl.com/post/aidaleel-architecture#web-application).
+The [T3 stack](https://create.t3.gg/) is a Next.js-based TypeScript stack featuring Prisma as the ORM, tRPC for GraphQL-esque type-safe APIs for client-server communication, NextAuth.js for authentication, and Tailwind CSS for utility-first styling. You can read more about how a T3 app operates from [my previous post](https://www.shumayl.site/post/aidaleel-architecture#web-application).
 
 ## Why Docker?
 I like to view Docker as a way to automate your whole software deployment process with just a few config files. At its core, Docker is a containerization platform that helps you package and build your application stack for seamless and consistent deployments — "Build Once, Deploy Everywhere".
@@ -280,7 +280,7 @@ In the final line of the code snippet above, we run a script called `start:migra
    ```
 This script performs the database schema migrations, generate Prisma client, and runs the application server.
 
-By running the schema migrations on container start, we can ensure that the database is reachable from the application container and has a consistent state with Prisma's shadow database. The schema migrations are done based on your T3 project's [`prisma/schema.prisma` file](https://www.shumayl.com/post/dockerizing-t3-postgres) and the migration history in `prisma/migrations`. 
+By running the schema migrations on container start, we can ensure that the database is reachable from the application container and has a consistent state with Prisma's shadow database. The schema migrations are done based on your T3 project's [`prisma/schema.prisma` file](https://www.shumayl.site/post/dockerizing-t3-postgres) and the migration history in `prisma/migrations`. 
 
 ## Building and deploying the application
 At this point, our application and database containers are ready to be built and run on the remote server. In short, here's what we need to do next:
