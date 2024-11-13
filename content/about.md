@@ -10,6 +10,6 @@ Previously, he was a Systems Engineer with the Digital Transformation team at HP
 
 He's a proud alumnus of Universiti Teknologi PETRONAS, where he graduated with a BSc. in Applied Physics with a specialization in Nanotechnology.
 
-In another life, Shumayl worked on bioplastics research at the Materials Research Institute of the Athlone Institute of Technology in Ireland, where he co-wrote [a journal publication on bioplastics](https://pubmed.ncbi.nlm.nih.gov/34208796/).
+In another life, Shumayl worked on bioplastics research at the Materials Research Institute of the Athlone Institute of Technology in Ireland, where he co-wrote [a journal publication on hybrid bioplastics](https://pubmed.ncbi.nlm.nih.gov/34208796/).
 
 You can find him on [LinkedIn](https://www.linkedin.com/in/shumayl) and [Twitter](https://twitter.com/Shumayl_), where he's happy to connect with fellow nerds.

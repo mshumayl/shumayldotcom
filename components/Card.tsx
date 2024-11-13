@@ -19,7 +19,7 @@ const Card: React.FC<CardProps> = ({slug, frontmatter, handleTagClick}: CardProp
     return (
         <>
             <div className="justify-items-center w-full my-10 min-h-fit rounded-lg">
-            <div className="justify-items-center flex md:flex-row flex-col h-full rounded-t-xl border-slate-800 border-l-2 border-t-2">
+            <div className="justify-items-center w-full flex md:flex-row flex-col h-full rounded-t-xl border-slate-800 border-l-2 border-t-2">
                     <Link href={`/post/${slug}`} className="shrink-0 w-full md:w-64 h-56 md:h-48 relative">
                         <Image className='shrink-0 p-2 rounded-xl object-cover' src={image} alt={title} fill></Image>
                     </Link>
