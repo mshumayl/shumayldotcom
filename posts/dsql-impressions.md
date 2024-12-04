@@ -41,7 +41,7 @@ It's not perfect though, here are some trade-offs I see so far:
 - Doesn't support PGVector, PostGIS, and some other extensions.
 - IAM-only authentication.
 
-Some are arguing that the lack of FK constraints is a deal-breaker. To me, this is consistent with the standard practice for distributed systems at scale, which relies on eventual consistency and referential relationships are enforced at the application level.
+Some are arguing that the lack of FK constraints is a deal-breaker. To me, not using FKs is consistent with the standard practice for distributed systems at scale, which relies on eventual consistency, and referential relationships are enforced at the application level.
 
 There are no pricing information yet as of this post. Aurora is often regarded as being quite expensive for many use cases, so I'm looking forward for the GA to explore into how the pricing works for Aurora DSQL. As with most serverless services, it might be the most cost-effective with low-volume use-cases, e.g. hobby projects, startups, PoCs.
 
