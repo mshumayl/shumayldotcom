@@ -5,6 +5,7 @@ excerpt: 'A new serverless SQL DB offering from AWS.'
 date: '2024-12-03'
 tags: 
     - 'systems'
+    - 'cloud'
 ---
 
 One of the most exciting announcements at #ReInvent2024 so far: Amazon Aurora DSQL – a new distributed SQL database service on AWS.
