@@ -1,5 +1,5 @@
 ---
-title: 'AWS Organization Resource Control Policy'
+title: 'AWS Organizations Resource Control Policy'
 image: '/images/rcp_deny_1.png'
 excerpt: 'A new Organizations policy to limit external access to your resources.'
 date: '2024-12-06'
@@ -8,8 +8,8 @@ tags:
     - 'cloud'
 ---
 
-![RCP AWS Organization console.](/images/rcp_console.png)
-*RCP AWS Organization console.*
+![RCP AWS Organizations console.](/images/rcp_console.png)
+*RCP AWS Organizations console.*
 
 This flew under my radar during pre:Invent, but AWS recently released resource control policies - a new policy type on AWS Organizations.
 
