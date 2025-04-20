@@ -20,8 +20,8 @@ So, instead of slogging through another round of IP arithmetics, I decided to do
 
 Enter cidr-checkr.
 
-# What is cidr-checkr?
-cidr-checkr is a lightweight HTTP API for analyzing CIDR ranges, detecting overlaps, and giving you instant clarity into your IP address space. It's built for network engineers, security teams, and anyone working with infrastructure/platforms who want to improve efficiency over manual CIDR calculations and IP lookups.
+## What is cidr-checkr?
+cidr-checkr is a lightweight HTTP API service for analyzing CIDR ranges, detecting overlaps, and giving you instant clarity into your IP address space. It's built for network engineers, security teams, and anyone working with infrastructure/platforms who want to improve efficiency over manual CIDR calculations and IP lookups.
 
 By automating IP math and conflict detection, it helps validate subnets, prevent misconfigurations, and manage complex network topologies with confidence.
 
@@ -29,7 +29,7 @@ It's a headless API server by design, so it integrates cleanly into your CI/CD p
 
 If you've ever had to double-check VPC ranges before provisioning - or retroactively fix a silent collision - cidr-checkr might save you some pain.
 
-# Installation
+## Installation
 1. Clone the repository
 ```
 git clone https://github.com/mshumayl/cidr-checkr.git
@@ -46,10 +46,11 @@ go run cmd/api/main.go
 
 Once it's up, you're ready to start sending requests to the API.
 
-# Using the API
+## Using the API
 As of writing this, the solution only has a single endpoint, i.e. the `/api/analyze-cidrs` endpoint. You can pass a list of N CIDRs in the body of this `POST` request, and it will return details about each CIDR along with any overlaps between the CIDRs provided.
 
-## Sample request body
+### Sample request body
+The `/api/analyze-cidrs` endpoint expects the following `application/json` payload.
 ```json
 {
   "cidrs": ["192.168.1.0/24", "10.0.0.0/8", "192.168.1.0/25"]
@@ -65,7 +66,7 @@ curl -X POST http://localhost:8080/api/analyze-cidrs \
   }'
 ```
 
-## Sample response
+### Sample response body
 ```json
 {
   "cidr_details": [
@@ -100,7 +101,7 @@ curl -X POST http://localhost:8080/api/analyze-cidrs \
 }
 ```
 
-# Forward paths
+## Forward paths
 Currently, I kept it as a headless API so it can be dropped into CI/CD checks or IaC tooling. A UI might come later, but the priority was making the logic composable and automation-friendly.
 
 A logical next step for improving the user experience would be to develop a simple front-end for this solution, allowing users to interact with the service in a more intuitive manner. Hosting it online could also make it easier for others to use and share.
