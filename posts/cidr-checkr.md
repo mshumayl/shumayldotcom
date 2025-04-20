@@ -8,7 +8,7 @@ tags:
     - 'cloud'
 ---
 
-When working on a cloud networking feature set for an internal developer platform (IDP) recently, I ran into a surprisingly annoying bottleneck — checking if an _N_-number CIDR ranges would collide.
+When working on a cloud networking feature set for an internal developer platform (IDP) recently, I ran into a surprisingly annoying bottleneck — checking if an N-number CIDR ranges would collide.
 
 I was doing it the manual way: punching one CIDR into an online calculator, copying the start and end IPs, then opening a second tab to do the same for another CIDR - and manually eyeballing the ranges to see if they overlapped. It was slow, clunky, and error-prone. I had spreadsheets open, tabs everywhere, and way too much context-switching for something that felt like it should be trivial. This just didn't scale.
 
@@ -47,7 +47,7 @@ go run cmd/api/main.go
 Once it's up, you're ready to start sending requests to the API.
 
 # Using the API
-As of writing this, the solution only has a single endpoint, i.e. the `/api/analyze-cidrs` endpoint. You can pass a list of _N_ CIDRs in the body of this `POST` request, and it will return details about each CIDR along with any overlaps between the CIDRs provided.
+As of writing this, the solution only has a single endpoint, i.e. the `/api/analyze-cidrs` endpoint. You can pass a list of N CIDRs in the body of this `POST` request, and it will return details about each CIDR along with any overlaps between the CIDRs provided.
 
 ## Sample request body
 ```json
