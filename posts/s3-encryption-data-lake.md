@@ -23,7 +23,10 @@ The solution relies on 5 key components.
 ## Step 1: Enable S3 Inventory in Child Accounts
 In each child account, enable S3 Inventory on all relevant buckets. This provides a daily object-level listing that includes metadata like size, encryption status, and last modified date—without needing to scan the bucket contents manually and breach the confidentiality of your child accounts.
 
-To automate this across multiple accounts, you can use the boto3 SDK together with cross-account role assumption. The key method is:
+![Creating inventory config via console.](/images/create-inv-console.png)
+*Configuring S3 Inventory via console.*
+
+To programmatically do this across multiple accounts, you can use the `boto3` SDK together with cross-account role assumption. The main method is:
 ```python
 s3_client.put_bucket_inventory_configuration()
 ```
@@ -63,12 +66,13 @@ The destination bucket policy must include:
     "Action": ["s3:PutObject"],
     "Resource": "arn:aws:s3:::destination-bucket/*"
 }
+```
 
 Also keep in mind that S3 Inventory does not support cross-region exporting. So you need destination buckets in each region that your source buckets reside.
 
 Hive-style partitioning encodes partition keys like `account_id` and `date` directly in the object path (e.g. `account_id=.../date=.../file.parquet`). This structure enables partition pruning in Athena and is compatible with AWS Glue crawlers. Since Athena engine version 2, partition pruning is enabled by default.
 
-In addition to the data files, S3 Inventory will generate a special `_symlink.txt` file in each partition folder. This file lists the full paths to the actual Parquet objects in that partition and is required for Athena to correctly resolve partitioned queries. Do not delete or move these symlinks as they are critical for querying the data lake efficiently.
+In addition to the data files, S3 Inventory will generate a special `_symlink.txt` file in each partition folder. This file lists the full paths to the actual Parquet objects in that partition and is required for Athena to correctly resolve partitioned queries. 
 
 ## Step 2: Set Up Hive-Compatible Athena Schema
 Create a Glue table that matches the schema of the S3 Inventory Parquet output and is partitioned by `account_id` and `date`. This allows Athena to query the exported S3 encryption data across all accounts efficiently using partition pruning.
@@ -104,9 +108,7 @@ Once created, load the partitions. You can do this either
 - by running `MSCK REPAIR TABLE s3_inventory;`, which auto-discovers partitions from Hive-compatible paths, or
 - with a Lambda that runs `ALTER TABLE s3_inventory ADD IF NOT EXISTS PARTITION (...)`
 
-One important caveat here is that partition registration must be repeated whenever a new bucket is configured with S3 Inventory, since that introduces a new `account_id` and potentially new partition paths that Athena doesn't yet know about. Without this, queries will miss newly ingested data.
-
-Using Parquet with Hive-style partitioning significantly improves query performance by reducing scanned data (partition pruning) and avoiding CSV deserialization overhead.
+One important caveat here is that partition registration must be repeated whenever a new bucket is configured with S3 Inventory, since that introduces a new `account_id` and potentially new partition paths that Athena doesn't yet know about. Without this, queries will miss newly ingested data. Automating this is highly advisable.
 
 ## Step 3: Apply Access Controls via Lake Formation 
 Now, we don't want everyone to be able to see potentially sensitive S3 metadata, so we need to configure role-based access control (RBAC). The easiest native approach to this is to use Lake Formation.
@@ -129,8 +131,6 @@ Next, we need to configure table-level and partition-level access. With the `s3_
 
 For an example, for a Security Operations Team, we'd want to grant read access to to all accounts partition for operational purposes, while we'd only want to allow individual account owners read access only to their corresponding `account_id` partition.
 
-Lastly, to make the above policies effective, we need to revoke direct S3 access to the underlying destination bucket (except for the required write roles). We also need to enable Lake Formation permission mode on the Glue Data Catalog and the registered S3 location and ensure that consumers (Athena, Glue, etc.) are querying the table using Lake Formation permissions. Do note that Lake Formation permissions supersede IAM policies when enabled.
-
 ## Step 4: Query via Athena
 With the data lake and RBAC in place, Athena becomes the unified query layer for inspecting object-level metadata across all of your child accounts, without having to check the actual buckets and potentially causing confidentiality issues.
 
@@ -147,7 +147,7 @@ FROM s3_inventory
 WHERE date = '2025-05-19' AND encryption_status = 'NONE';
 ```
 
-Conversely, we could also see a list of our inventory that's prone to the [recent SSE-C vulnerability](https://arcticwolf.com/resources/blog/ransomware-campaign-encrypting-amazon-s3-buckets-using-sse-c/) by running the following query:
+Conversely, we could also see a list of our inventory that's prone to the [recent SSE-C vulnerability earlier this year](https://arcticwolf.com/resources/blog/ransomware-campaign-encrypting-amazon-s3-buckets-using-sse-c/) by running the following query:
 ```ddl
 SELECT account_id, bucket, key, encryption_status
 FROM s3_inventory
@@ -162,9 +162,18 @@ WHERE date = '2025-05-19'
 GROUP BY account_id, encryption_status;
 ```
 
-These queries are fast and uncostly, since Athena can skip partitions and read Parquet efficiently.
+These queries are fast and cost-effective for two key reasons:
+1. Partition pruning: Athena only scans the partitions that match your `WHERE` clause conditions (`date` and `account_id`)
+2. Parquet columnar format: Athena only reads the columns specified in your `SELECT` statement, not the entire row
+
+For example, in our encryption status query, Athena will:
+- Skip all partitions except the specified date
+- Only read the `account_id`, `bucket`, `key`, and `encryption_status` columns
+- Take advantage of Parquet's built-in compression and encoding
 
 ## Takeaway
-This architecture supports centralized visibility into encryption status, object growth, and policy compliance, making it ideal for security teams tasked with maintaining cloud hygiene and meeting regulatory requirements.
+With that said, I have to end this article by addressing one last caveat. Building a data lake might seem like overkill just to track encryption. But think about it: you now have a scalable foundation that gives you X-ray vision into your S3 landscape without poking around in everyone's buckets. 
 
-While it's batch-oriented and not real-time, it provides a strong foundation for S3 compliance reporting, audit readiness, and continuous monitoring, which are all critical components of most organization's cloud security posture.
+The beauty of this setup isn't just about catching unencrypted objects (though that's pretty handy). It's about achieving this in a manner that's simple and native to the cloud provider (in this case, AWS), and without breaking the bank or stepping on anyone's toes (or peeking into their stuff).
+
+Sure, it's not real-time, but do you really need to know about that new bucket someone created in the last 5 minutes? For most security and compliance needs, daily insights are more than enough to keep your ecosystem in order.
