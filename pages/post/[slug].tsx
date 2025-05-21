@@ -87,6 +87,7 @@ export default function PostPage({ frontmatter, content, slug }: { frontmatter: 
                  [&>nav]:rounded-md [&>nav]:mt-6 [&>nav]:px-8 [&>nav]:py-6 
                  [&>nav]:bg-slate-800
                  [&>nav]:before:content-['Table_of_Contents']
+                 [&>ul>li>ul>li>code]:text-gray-100 [&>ul>li>ul>li>code]:bg-gray-700 [&>ul>li>ul>li>code]:rounded-md [&>ul>li>ul>li>code]:p-0.5 [&>ul>li>ul>li>code]:m-0.5 [&>ul>li>ul>li>code]:text-xs
                  [&>ol>li>code]:text-gray-100 [&>ol>li>code]:bg-gray-700 [&>ol>li>code]:rounded-md [&>ol>li>code]:p-0.5 [&>ol>li>code]:m-0.5 [&>ol>li>code]:text-xs
                  [&>ul>li>code]:text-gray-100 [&>ul>li>code]:bg-gray-700 [&>ul>li>code]:rounded-md [&>ul>li>code]:p-0.5 [&>ul>li>code]:m-0.5 [&>ul>li>code]:text-xs
                  [&>ol>li>ul>li>code]:text-gray-100 [&>ol>li>ul>li>code]:bg-gray-700 [&>ol>li>ul>li>code]:rounded-md [&>ol>li>ul>li>code]:p-0.5 [&>ol>li>ul>li>code]:m-0.5 [&>ol>li>ul>li>code]:text-xs
