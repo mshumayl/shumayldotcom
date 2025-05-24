@@ -2,14 +2,12 @@
 title: 'About'
 ---
 
-Shumayl is a builder, a tinkerer, and a self-proclaimed nerd. 
+Hi! I'm Shumayl (👟 + 🛣️, shoe-mile). I build secure systems and occasionally yap about it.
 
-In his role as a Cloud Engineer with the AWS Platform Engineering team at Deloitte Global, he develops cloud security guardrails and self-service infrastructure automations. These solutions are used by member firm business functions and client-facing managed service providers globally.
+I'm a Software Engineer on the Security Engineering team at Grab, where I work on automated vulnerability management. Before that, I developed cloud security guardrails (automated remediations) at Deloitte Global and worked on process digitalization at HP Inc.
 
-Previously, he was a Systems Engineer with the Digital Transformation team at HP Inc., where he worked on digitization and process automation.
+I studied Applied Physics (Nanotechnology) at Universiti Teknologi PETRONAS, but these days you'll find me deep in AWS documentation instead of physics textbooks.
 
-He's a proud alumnus of Universiti Teknologi PETRONAS, where he graduated with a BSc. in Applied Physics with a specialization in Nanotechnology.
+Physics degree ➔ Materials research ➔ Tech. Weird path, I know. I even co-wrote [a paper on hybrid bioplastics](https://pubmed.ncbi.nlm.nih.gov/34208796/) during my time at the Materials Research Institute ([now called PRISM](https://prism.tus.ie/apt-gateway/)) in Ireland.
 
-In another life, Shumayl worked on bioplastics research at the Materials Research Institute of the Athlone Institute of Technology in Ireland, where he co-wrote [a journal publication on hybrid bioplastics](https://pubmed.ncbi.nlm.nih.gov/34208796/).
-
-You can find him on [LinkedIn](https://www.linkedin.com/in/shumayl) and [email](mailto:shumaylasmawi@gmail.com) (shumaylasmawi@gmail.com), where he's happy to connect with fellow nerds.
+Want to chat about cloud security, automation, or that one time I tried to make microwave-attenuating materials from shrimp shells? Find me on [LinkedIn](https://www.linkedin.com/in/shumayl) or drop me a line at [shumaylasmawi@gmail.com](mailto:shumaylasmawi@gmail.com).
