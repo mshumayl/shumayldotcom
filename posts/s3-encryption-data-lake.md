@@ -1,24 +1,26 @@
 ---
-title: 'Building a Data Lake for Multi-Account S3 Security Analytics'
+title: 'Simple and Cost-Effective Data Lake Setup for Multi-Account S3 Encryption Analytics'
 image: '/images/pexels-zachary-baltimore-2152307015-32160240.jpg'
-excerpt: 'A scalable data lake design to monitor S3 object encryption across thousands of AWS accounts.'
+excerpt: 'A scalable data lake design to monitor S3 object encryption across hundreds of AWS accounts.'
 date: '2025-05-21'
 tags: 
     - 'cybersecurity'
     - 'cloud'
 ---
 
-When you're managing data security and compliance at the scale of thousands of AWS accounts, understanding the encryption status of every S3 object becomes a non-trivial problem. You want visibility, but you also want governance without overstepping lines of confidentiality. 
+When you're managing data security and compliance at the scale of hundreds or maybe even thousands of AWS accounts, understanding the encryption status of every S3 object becomes a non-trivial problem. You want visibility, you want governance without peeking through other team's private data. You also want to achieve this without breaking the bank and without spending too much engineering time.
 
-This post outlines a scalable pattern for building a data lake that ingests S3 Inventory reports across all child accounts, stores them in a structured Parquet format, governs access with Lake Formation, and exposes them through Athena for ad hoc SQL analysis. This approach eliminates the need for active S3 object scans and enables you to query object-level metadata like encryption status efficiently and securely.
+This post outlines a scalable pattern for building a simple and cost-effective data lake that ingests S3 Inventory reports across all child accounts, stores them in a structured Parquet format, governs access with Lake Formation, and exposes them through Athena for ad hoc SQL analysis. This approach eliminates the need for active S3 object scans and enables you to query object-level metadata like encryption status efficiently and securely.
 
-## Architecture Summary
+## Architecture Summary and Costs
 The solution relies on 5 key components.
-1. Ingestion: S3 Inventory reports from each child account, exported in Parquet format with Hive-style partitioning.
-2. Storage: Central S3 bucket used as the data lake.
-3. Catalog: AWS Glue catalogs the Parquet data with Hive-compatible partitioning (by account and date).
-4. Access Control: Lake Formation manages fine-grained permissions per account/team.
-5. Query Layer: Athena queries the lake via SQL, with partition pruning for performance.
+1. Ingestion: S3 Inventory reports from each child account, exported in Parquet format with Hive-style partitioning. Costs ~$0.0025 per million objects listed.
+2. Storage: Central S3 bucket used as the data lake. Costs ~$0.023 per GB-month for the first 50TB and goes down the more you store.
+3. Catalog: AWS Glue catalogs the Parquet data with Hive-compatible partitioning (by account and date). First million objects free, then $1 per 100k objects stored above 1 million per month.
+4. Access Control: Lake Formation manages fine-grained permissions per account/team. No costs.
+5. Query Layer: Athena queries the lake via SQL, with partition pruning for performance. Pay per query, with ~$5 per TB scanned.
+
+As you can see, most parts are either free or you pay as you go. You'll know exactly what it costs.
 
 ## Step 1: Enable S3 Inventory in Child Accounts
 In each child account, enable S3 Inventory on all relevant buckets. This provides a daily object-level listing that includes metadata like size, encryption status, and last modified date—without needing to scan the bucket contents manually and breach the confidentiality of your child accounts.
@@ -127,7 +129,7 @@ Next, we need to configure table-level and partition-level access. With the `s3_
 - LF-tags (Lake Formation tags)
     - Tag datasets by `account_id`, `environment`, or other logical groupings
     - Grant access to tags rather than hard-cdoed values
-    - Better scalability when managing hundreds or thousands of AWS accounts
+    - Better scalability when managing hundreds of AWS accounts
 
 For an example, for a Security Operations Team, we'd want to grant read access to to all accounts partition for operational purposes, while we'd only want to allow individual account owners read access only to their corresponding `account_id` partition.
 
@@ -163,17 +165,32 @@ GROUP BY account_id, encryption_status;
 ```
 
 These queries are fast and cost-effective for two key reasons:
-1. Partition pruning: Athena only scans the partitions that match your `WHERE` clause conditions (`date` and `account_id`)
-2. Parquet columnar format: Athena only reads the columns specified in your `SELECT` statement, not the entire row
+1. Partition pruning: Athena only scans the partitions that match your `WHERE` clause conditions (`date` and `account_id`).
+2. Parquet columnar format: Athena only reads the columns specified in your `SELECT` statement, not the entire row.
 
 For example, in our encryption status query, Athena will:
-- Skip all partitions except the specified date
-- Only read the `account_id`, `bucket`, `key`, and `encryption_status` columns
-- Take advantage of Parquet's built-in compression and encoding
+- Skip all partitions except the specified date.
+- Only read the `account_id`, `bucket`, `key`, and `encryption_status` columns.
+- Take advantage of Parquet's built-in compression and encoding.
 
 ## Takeaway
-With that said, I have to end this article by addressing one last caveat. Building a data lake might seem like overkill just to track encryption. But think about it: you now have a scalable foundation that gives you X-ray vision into your S3 landscape without poking around in everyone's buckets. 
+With that said, I have to end this article by addressing two key points: cost and compliance.
 
-The beauty of this setup isn't just about catching unencrypted objects (though that's pretty handy). It's about achieving this in a manner that's simple and native to the cloud provider (in this case, AWS), and without breaking the bank or stepping on anyone's toes (or peeking into their stuff).
+From a cost perspective, this solution is remarkably efficient:
+- S3 Inventory reports are really cheap at about $0.0025 per million objects listed. This means that with a budget of $10 for this, you could list about 4 billion objects throughout your ecosystem.
+- Storage costs are minimal since Parquet is highly compressed (~$0.023/GB-month). This means that with a budget of another $80, you could store over 3 TB of Parquet in your data lake.
+- Lake Formation adds no extra charges.
+- Athena queries are optimized through partitioning, typically scanning less than a few GB per query (~$5/TB). A budget of $10 could afford you about 2000 queries.
 
-Sure, it's not real-time, but do you really need to know about that new bucket someone created in the last 5 minutes? For most security and compliance needs, daily insights are more than enough to keep your ecosystem in order.
+For a typical enterprise with thousands of S3 buckets, the monthly cost usually stays under $100. That's pennies compared to the potential cost of a compliance violation or data breach.
+
+From a compliance angle, this setup delivers:
+- Daily visibility into encryption status across your entire S3 estate.
+- Fine-grained access controls through Lake Formation.
+- Audit-friendly SQL queries for compliance reporting. You could even plug this into a visualization tool/layer.
+- Zero access to actual bucket contents, maintaining data confidentiality.
+- Clear separation of duties between security teams and data owners.
+
+Building a data lake might seem like overkill just to track encryption. But think about it: you now have a scalable foundation that gives you X-ray vision into your S3 landscape without compromising security or breaking the bank.
+
+Sure, it's not real-time, but do you really need to know about that new bucket someone created in the last 5 minutes? For most security and compliance needs, daily insights are more than enough to keep your ecosystem in order and keep your auditors happy.
