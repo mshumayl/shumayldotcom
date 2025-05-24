@@ -8,17 +8,33 @@ tags:
     - 'cloud'
 ---
 
-When you're managing data security and compliance at the scale of hundreds or maybe even thousands of AWS accounts, understanding the encryption status of every S3 object becomes a non-trivial problem. You want visibility, you want governance without peeking through other team's private data. You also want to achieve this without breaking the bank and without spending too much engineering time.
+Working in highly regulated industries has taught me one thing: cloud governance at scale is hard. Really hard. Especially when it comes to data security fundamentals like encryption.
 
-This post outlines a scalable pattern for building a simple and cost-effective data lake that ingests S3 Inventory reports across all child accounts, stores them in a structured Parquet format, governs access with Lake Formation, and exposes them through Athena for ad hoc SQL analysis. This approach eliminates the need for active S3 object scans and enables you to query object-level metadata like encryption status efficiently and securely.
+When you're managing data security and compliance across hundreds or thousands of AWS accounts, tracking the encryption status of every S3 object becomes a massive challenge. You need complete visibility without compromising data privacy, and you need it without spending a fortune or drowning your team in operational overhead.
 
-## Architecture Summary and Costs
+This post walks through a practical pattern for solving this problem: building a lightweight data lake that centralizes S3 Inventory reports from all your AWS accounts. By combining structured Parquet storage with Lake Formation's governance and Athena's SQL capabilities, you get efficient, secure, and cost-effective insights into your S3 encryption landscape - all without touching the actual bucket contents ("look Auditor, no hands!").
+
+## Architecture Summary 
+
+![Data lake architecture](/images/s3-datalake.png)
+*Our cheap and efficient data lake design.*
+
+### Components and costs
 The solution relies on 5 key components.
 1. Ingestion: S3 Inventory reports from each child account, exported in Parquet format with Hive-style partitioning. Costs ~$0.0025 per million objects listed.
 2. Storage: Central S3 bucket used as the data lake. Costs ~$0.023 per GB-month for the first 50TB and goes down the more you store.
 3. Catalog: AWS Glue catalogs the Parquet data with Hive-compatible partitioning (by account and date). First million objects free, then $1 per 100k objects stored above 1 million per month.
 4. Access Control: Lake Formation manages fine-grained permissions per account/team. No costs.
 5. Query Layer: Athena queries the lake via SQL, with partition pruning for performance. Pay per query, with ~$5 per TB scanned.
+
+### Query flow
+As to what happens when a user sends in a SQL query to Athena:
+1. Athena parses the query and plans query.
+2. Athena gets the schema and partition info from Glue Data Catalog.
+3. Athena checks permissions and RBAC from Lake Formation.
+4. Athena reads Parquet files from S3.
+5. Athena executes query and writes result to a separate S3.
+6. Athena returns query result to user.
 
 As you can see, most parts are either free or you pay as you go. You'll know exactly what it costs.
 
@@ -140,9 +156,9 @@ Athena queries are read-only and serverless, making them ideal for security, gov
 
 Before running queries, you need to ensure that
 - your IAM principal has the required Lake Formation permissions, and
-- a workgroup is configured with result location and query limits, and
+- a workgroup is configured with result location (query results bucket) and query limits (this can be done via the Athena console)
 
-For an example, if we want to find unencrypted objects across all accounts over the last day, we could run the following query:
+One example query is if we want to find unencrypted objects across all accounts over the last day, we could run the following query:
 ```ddl
 SELECT account_id, bucket, key, encryption_status
 FROM s3_inventory
@@ -191,6 +207,6 @@ From a compliance angle, this setup delivers:
 - Zero access to actual bucket contents, maintaining data confidentiality.
 - Clear separation of duties between security teams and data owners.
 
-Building a data lake might seem like overkill just to track encryption. But think about it: you now have a scalable foundation that gives you X-ray vision into your S3 landscape without compromising security or breaking the bank.
+All of which will make your auditors happy.
 
-Sure, it's not real-time, but do you really need to know about that new bucket someone created in the last 5 minutes? For most security and compliance needs, daily insights are more than enough to keep your ecosystem in order and keep your auditors happy.
+Building a data lake might seem like overkill just to track encryption. But think about it: you now have a scalable foundation that gives you X-ray vision into your S3 landscape without compromising security or breaking the bank.
